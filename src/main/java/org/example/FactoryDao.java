@@ -11,7 +11,7 @@ public abstract class FactoryDao {
 
         public static FactoryDao getDAOFactory(int whichFactory) {
             return switch (whichFactory) {
-                case MYSQL_JDBC -> new MySqlFactoryDao();
+                case MYSQL_JDBC -> MySqlFactoryDao.getInstance();
                 default -> null;
             };
         }

@@ -8,7 +8,9 @@ public class ClienteJDBC_MySql implements ClienteDao {
 
     private Connection conn;
 
-    public ClienteJDBC_MySql(Connection conn) {
+
+
+    public ClienteJDBC_MySql(Connection conn) throws SQLException {
         this.conn = conn;
     }
 
@@ -33,7 +35,7 @@ public class ClienteJDBC_MySql implements ClienteDao {
     }
 
     @Override
-    public List<Cliente> getPCliente() throws SQLException {
+    public List<Cliente> getClientes() throws SQLException {
         return List.of();
     }
 }
