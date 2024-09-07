@@ -1,9 +1,15 @@
 package org.example;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public class FacturaJDBC_MySql implements FacturaDao {
+    private Connection con;
+
+    public FacturaJDBC_MySql(Connection con) {
+        this.con = con;
+    }
 
 
 

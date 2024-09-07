@@ -248,7 +248,7 @@ public class MySqlFactoryDao extends FactoryDao {
         return 0;
     }
 
-    //Insertar SQL de cliente
+    //Insertar SQL de factura
     private int insertFactura (Factura factura, Connection conn) throws Exception{
         String insert = "INSERT INTO Factura (idFactura, idCliente) VALUES (?, ?)";
         PreparedStatement ps = null;
@@ -268,7 +268,7 @@ public class MySqlFactoryDao extends FactoryDao {
         return 0;
     }
 
-    //Insertar SQL de cliente
+    //Insertar SQL de producto
     private int insertProducto (Producto producto, Connection conn) throws Exception{
         String insert = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
@@ -289,7 +289,7 @@ public class MySqlFactoryDao extends FactoryDao {
         return 0;
     }
 
-    //Insertar SQL de cliente
+    //Insertar SQL de factura producto
     private int insertFacturaProducto (FacturaProducto facturaProducto, Connection conn) throws Exception{
         String insert = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
@@ -311,14 +311,25 @@ public class MySqlFactoryDao extends FactoryDao {
     }
 
     @Override
-    public ClienteDao getClienteDao() throws SQLException {
+    public ClienteJDBC_MySql getClienteDao() throws SQLException {
         return new ClienteJDBC_MySql(createConnection());
     }
 
     @Override
-    public FacturaDao getFacturaDao() throws SQLException {
-        return null;
+    public FacturaJDBC_MySql getFacturaDao() throws SQLException {
+        return new FacturaJDBC_MySql(createConnection());
     }
+
+    @Override
+    public FacturaProductoJDBC_MySql getFacturaProducto() throws SQLException {
+        return new FacturaProductoJDBC_MySql(createConnection());
+    }
+
+    @Override
+    public ProductoJDBC_MySql getProductoDao() throws SQLException {
+        return new ProductoJDBC_MySql(createConnection());
+    }
+
 
     private void closePsAndCommit(Connection conn, PreparedStatement ps) {
         if (conn != null){

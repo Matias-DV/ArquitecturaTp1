@@ -14,12 +14,9 @@ public class Main {
 
         //mysql.dropTables();
         //mysql.createTables();
-        mysql.populateDB();
-
-
-
-
-
+        //mysql.populateDB();
+        mysql.getFacturaDao();
+        ClienteDao cliente = mysql.getClienteDao();
     }
 
 
