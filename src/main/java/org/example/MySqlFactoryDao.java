@@ -16,7 +16,7 @@ public class MySqlFactoryDao extends FactoryDao {
     private static MySqlFactoryDao instance = null;
 
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    public static final String uri = "jdbc:mysql://localhost:3306/demodao";
+    public static final String uri = "jdbc:mysql://localhost:3306/Entrega1";
     public static Connection conn;
 
     private MySqlFactoryDao() {
@@ -31,7 +31,7 @@ public class MySqlFactoryDao extends FactoryDao {
     }
 
     //Crea la conexion con la base sql
-    public static Connection createConnection() {
+    public Connection createConnection() {
         if (conn != null) {
             return conn;
         }
@@ -62,6 +62,7 @@ public class MySqlFactoryDao extends FactoryDao {
             }
         }
     }
+    //Drops de todas las tablas que manejemos
     public void dropTables() throws SQLException {
         String dropCliente = "DROP TABLE IF EXISTS Cliente";
         this.conn.prepareStatement(dropCliente).execute();
@@ -80,11 +81,12 @@ public class MySqlFactoryDao extends FactoryDao {
         this.conn.commit();
     }
 
+    //Creacion de todas las tablas que manejemos
     public void createTables() throws SQLException {
         String tableCliente = "CREATE TABLE IF NOT EXISTS Cliente (" +
                 "    idCliente int  NOT NULL," +
                 "    nombre varchar(500)  NOT NULL," +
-                "    emal varchar(150)  NOT NULL," +
+                "    email varchar(150)  NOT NULL," +
                 "    CONSTRAINT Cliente_pk PRIMARY KEY (idCliente)" +
                 ")";
         this.conn.prepareStatement(tableCliente).execute();
@@ -96,14 +98,6 @@ public class MySqlFactoryDao extends FactoryDao {
                 ")";
         this.conn.prepareStatement(tableFactura).execute();
         this.conn.commit();
-        String tableFacturaProducto = "CREATE TABLE IF NOT EXISTS Factura_Producto (" +
-                "    idFactura int  NOT NULL," +
-                "    idProducto int  NOT NULL," +
-                "    cantidad int  NOT NULL," +
-                "    CONSTRAINT Factura_Producto_pk PRIMARY KEY (idFactura,idProducto)\n" +
-                ")";
-        this.conn.prepareStatement(tableFacturaProducto).execute();
-        this.conn.commit();
         String tableProducto = "CREATE TABLE IF NOT EXISTS Producto (" +
                 "    idProducto int  NOT NULL," +
                 "    nombre varchar(45)  NOT NULL," +
@@ -112,8 +106,18 @@ public class MySqlFactoryDao extends FactoryDao {
                 ")";
         this.conn.prepareStatement(tableProducto).execute();
         this.conn.commit();
+        String tableFacturaProducto = "CREATE TABLE IF NOT EXISTS Factura_Producto (" +
+                "    idFactura int  NOT NULL," +
+                "    idProducto int  NOT NULL," +
+                "    cantidad int  NOT NULL," +
+                "    CONSTRAINT Factura_Producto_pk PRIMARY KEY (idFactura,idProducto)" +
+                ")";
+        this.conn.prepareStatement(tableFacturaProducto).execute();
+        this.conn.commit();
+
     }
 
+    //Obtiene los datos de un archivo csv que le pasemos por parametro
     private Iterable<CSVRecord> getData(String archivo) throws IOException {
         String path = "src\\recursos\\" + archivo;
         Reader in = new FileReader(path);
@@ -124,6 +128,7 @@ public class MySqlFactoryDao extends FactoryDao {
         return records;
     }
 
+    //Obtiene los datos de los archivos csv y los inserta en las tablas
     public void populateDB() throws Exception {
         try {
             System.out.println("Populating DB...");
@@ -136,6 +141,7 @@ public class MySqlFactoryDao extends FactoryDao {
                         try {
                             int id = Integer.parseInt(idString);
                             Cliente cliente = new Cliente(id, name, email);
+                            //cliente.insertar();
                             insertCliente(cliente, conn);
                         } catch (NumberFormatException e) {
                             System.err.println("Error de formato en datos de dirección: " + e.getMessage());
@@ -145,7 +151,7 @@ public class MySqlFactoryDao extends FactoryDao {
             }
             System.out.println("Clientes insertados");
 
-            for (CSVRecord row : getData("Facturas.csv")) {
+            for (CSVRecord row : getData("facturas.csv")) {
                 if (row.size() >= 2) { // Verificar que hay al menos 4 campos en el CSVRecord
                     String idFactura = row.get(0);
                     String idCliente = row.get(1);
@@ -156,6 +162,7 @@ public class MySqlFactoryDao extends FactoryDao {
                             int idC = Integer.parseInt(idCliente);
 
                             Factura factura = new Factura(idF, idC);
+                            //factura.insertar();
                             insertFactura(factura, conn);
                         } catch (NumberFormatException e) {
                             System.err.println("Error de formato en datos de persona: " + e.getMessage());
@@ -165,29 +172,6 @@ public class MySqlFactoryDao extends FactoryDao {
             }
 
             System.out.println("Facturas insertadas");
-
-            for (CSVRecord row : getData("facturas-productos.csv")) {
-                if (row.size() >= 2) { // Verificar que hay al menos 4 campos en el CSVRecord
-                    String idFactura = row.get(0);
-                    String idProducto = row.get(1);
-                    String cantidad = row.get(2);
-
-                    if (!idFactura.isEmpty() && !idProducto.isEmpty() && !cantidad.isEmpty()) {
-                        try {
-                            int idF = Integer.parseInt(idFactura);
-                            int idP = Integer.parseInt(idProducto);
-                            int cant = Integer.parseInt(idProducto);
-
-                            FacturaProducto facturaProducto = new FacturaProducto(idF, idP,cant);
-                            insertFacturaProducto(facturaProducto, conn);
-                        } catch (NumberFormatException e) {
-                            System.err.println("Error de formato en datos de persona: " + e.getMessage());
-                        }
-                    }
-                }
-            }
-
-            System.out.println("Facturas-Productos insertadas");
 
             for (CSVRecord row : getData("productos.csv")) {
                 if (row.size() >= 3) { // Verificar que hay al menos 4 campos en el CSVRecord
@@ -201,6 +185,7 @@ public class MySqlFactoryDao extends FactoryDao {
                             int val = Integer.parseInt(valor);
 
                             Producto Producto = new Producto(idP,nombre,val);
+                            //producto.insertar();
                             insertProducto(Producto, conn);
                         } catch (NumberFormatException e) {
                             System.err.println("Error de formato en datos de persona: " + e.getMessage());
@@ -210,6 +195,31 @@ public class MySqlFactoryDao extends FactoryDao {
             }
 
             System.out.println("Productos insertados");
+
+            for (CSVRecord row : getData("facturas-productos.csv")) {
+                if (row.size() >= 3) { // Verificar que hay al menos 4 campos en el CSVRecord
+                    String idFactura = row.get(0);
+                    String idProducto = row.get(1);
+                    String cantidad = row.get(2);
+
+                    if (!idFactura.isEmpty() && !idProducto.isEmpty() && !cantidad.isEmpty()) {
+                        try {
+                            int idF = Integer.parseInt(idFactura);
+                            int idP = Integer.parseInt(idProducto);
+                            int cant = Integer.parseInt(cantidad);
+
+                            FacturaProducto facturaProducto = new FacturaProducto(idF, idP,cant);
+                            //facturaProducto.insertar();
+                            insertFacturaProducto(facturaProducto, conn);
+                        } catch (NumberFormatException e) {
+                            System.err.println("Error de formato en datos de persona: " + e.getMessage());
+                        }
+                    }
+                }
+            }
+
+            System.out.println("Facturas-Productos insertadas");
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -234,6 +244,7 @@ public class MySqlFactoryDao extends FactoryDao {
         } finally {
             closePsAndCommit(conn, ps);
         }
+        //hasta aca todo el codigo puede estar en la tabla cliente dentro del metodo insertar y luego invocarlo aca
         return 0;
     }
 
@@ -253,6 +264,7 @@ public class MySqlFactoryDao extends FactoryDao {
         } finally {
             closePsAndCommit(conn, ps);
         }
+        //hasta aca todo el codigo puede estar en la tabla factura dentro del metodo insertar y luego invocarlo aca
         return 0;
     }
 
@@ -273,12 +285,13 @@ public class MySqlFactoryDao extends FactoryDao {
         } finally {
             closePsAndCommit(conn, ps);
         }
+        //hasta aca todo el codigo puede estar en la tabla facturaProducto dentro del metodo insertar y luego invocarlo aca
         return 0;
     }
 
     //Insertar SQL de cliente
     private int insertFacturaProducto (FacturaProducto facturaProducto, Connection conn) throws Exception{
-        String insert = "INSERT INTO Cliente (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
+        String insert = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(insert);
@@ -293,6 +306,7 @@ public class MySqlFactoryDao extends FactoryDao {
         } finally {
             closePsAndCommit(conn, ps);
         }
+        //hasta aca todo el codigo puede estar en la tabla producto dentro del metodo insertar y luego invocarlo aca
         return 0;
     }
 

@@ -38,4 +38,6 @@ public class ClienteJDBC_MySql implements ClienteDao {
     public List<Cliente> getClientes() throws SQLException {
         return List.of();
     }
+
+
 }
