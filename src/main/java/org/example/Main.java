@@ -5,17 +5,12 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        FactoryDao elejirDB = FactoryDao.getDAOFactory(1);
-
-
-        MySqlFactoryDao mysql = MySqlFactoryDao.getInstance();
-
-        mysql.createConnection();
+        FactoryDao mysql = FactoryDao.getDAOFactory(1);
 
         //mysql.dropTables();
         //mysql.createTables();
         //mysql.populateDB();
-        mysql.getFacturaDao();
+        //mysql.getFacturaDao();
         ClienteDao cliente = mysql.getClienteDao();
 
         Producto producto = new Producto(111,"Pelota de futbol", 50);
@@ -32,8 +27,8 @@ public class Main {
         //productoDao.insertProducto(111,"Auriculares LG Pro Max", 200);
         //productoDao.updateProducto(producto);
         //productoDao.deleteProducto(111);
-        Producto p = productoDao.getProducto(1);
-        p.imprimir();
+        //Producto p = productoDao.getProducto(1);
+        //p.imprimir();
 
         /*Termina Pruebas Matii DV*/
 
@@ -62,7 +57,4 @@ public class Main {
         /*Pruebas Lucass F*/
         /*Termina Pruebas Lucass F*/
     }
-
-
-
 }
