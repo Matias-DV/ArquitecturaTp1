@@ -1,6 +1,7 @@
 package org.example;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,7 +16,24 @@ public class ClienteJDBC_MySql implements ClienteDao {
     }
 
     @Override
-    public int insertCliente(int id, String name, int age) throws SQLException {
+    public int insertCliente(int idCliente, String nombre, String email) throws SQLException {
+        String query = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
+        PreparedStatement ps = conn.prepareStatement(query);
+        try{
+            ps.setInt(1, idCliente);
+            ps.setString(2, nombre);
+            ps.setString(3, email);
+            if (ps.executeUpdate() == 0) {
+                throw new Exception("No se pudo insertar");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            ps.close();
+            conn.commit();
+        }
         return 0;
     }
 

@@ -16,39 +16,53 @@ public class ProductoJDBC_MySql implements  ProductoDao{
 
     @Override
     public int insertProducto(int idProducto, String nombre, int valor) throws SQLException {
-        String query = "INSERT INTO producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setInt(1, idProducto);
-        ps.setString(2, nombre);
-        ps.setInt(3, valor);
-        return ps.executeUpdate();
+        try{
+            ps.setInt(1, idProducto);
+            ps.setString(2, nombre);
+            ps.setInt(3, valor);
+            if (ps.executeUpdate() == 0) {
+                throw new Exception("No se pudo insertar");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            ps.close();
+            conn.commit();
+        }
+        //hasta aca todo el codigo puede estar en la tabla facturaProducto dentro del metodo insertar y luego invocarlo aca
+        return 0;
     }
 
     @Override
     public void updateProducto(Producto idProducto) throws SQLException {
-        // Consulta para verificar si el producto existe
-        String select = "SELECT * FROM producto WHERE idProducto = ?";
+        //Consulta para verificar si el producto existe
+        String select = "SELECT * FROM Producto WHERE idProducto = ?";
         PreparedStatement psSelect = null;
         PreparedStatement psUpdate = null;
         ResultSet rs = null;
 
         try {
-            // Preparando el SELECT para verificar la existencia del producto
+            //Preparando el SELECT para verificar la existencia del producto
             psSelect = conn.prepareStatement(select);
             psSelect.setInt(1, idProducto.getId());
             rs = psSelect.executeQuery();
 
-            // Si el producto existe, actualizamos
+            //Si el producto existe, actualizamos
             if (rs.next()) {
-                // Consulta para actualizar el producto
-                String update = "UPDATE producto SET nombre = ?, valor = ? WHERE idProducto = ?";
+                //Consulta para actualizar el producto
+                String update = "UPDATE Producto SET nombre = ?, valor = ? WHERE idProducto = ?";
 
-                // Preparando la actualización
+                //Preparando la actualización
                 psUpdate = conn.prepareStatement(update);
                 psUpdate.setString(1, idProducto.getNombre());
-                psUpdate.setDouble(2, idProducto.getValor());
+                psUpdate.setFloat(2, idProducto.getValor());
+                psUpdate.setFloat(3, idProducto.getId());
 
-                // Ejecutando la actualización
+                //Ejecutando la actualización
                 int rowsAffected = psUpdate.executeUpdate();
 
                 if (rowsAffected > 0) {
@@ -61,9 +75,9 @@ public class ProductoJDBC_MySql implements  ProductoDao{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw e; // Relanzar la excepción para que la maneje la capa superior
+            throw e; //Relanzar la excepción para que la maneje la capa superior
         } finally {
-            // Cerrar ResultSet, PreparedStatement
+            //Cerrar ResultSet, PreparedStatement
             if (rs != null) {
                 rs.close();
             }
@@ -73,15 +87,16 @@ public class ProductoJDBC_MySql implements  ProductoDao{
             if (psUpdate != null) {
                 psUpdate.close();
             }
+            conn.commit();
         }
     }
 
     @Override
     public void deleteProducto(int idProducto) throws SQLException {
         // Consulta para verificar si el producto existe
-        String select = "SELECT * FROM producto WHERE idProducto = ?";
+        String select = "SELECT * FROM Producto WHERE idProducto = ?";
         // Consulta para eliminar el producto
-        String delete = "DELETE FROM producto WHERE idProducto = ?";
+        String delete = "DELETE FROM Producto WHERE idProducto = ?";
 
         PreparedStatement psSelect = null;
         PreparedStatement psDelete = null;
@@ -95,11 +110,11 @@ public class ProductoJDBC_MySql implements  ProductoDao{
 
             // Si el producto existe, se elimina
             if (rs.next()) {
-                // Preparar la eliminación
+                //Preparar la eliminación
                 psDelete = conn.prepareStatement(delete);
                 psDelete.setInt(1, idProducto);
 
-                // Ejecutar la eliminación
+                //Ejecutar la eliminación
                 int rowsAffected = psDelete.executeUpdate();
 
                 if (rowsAffected > 0) {
@@ -124,32 +139,32 @@ public class ProductoJDBC_MySql implements  ProductoDao{
             if (psDelete != null) {
                 psDelete.close();
             }
+
+            conn.commit();
         }
     }
 
     @Override
     public Producto getProducto(int idProducto) throws SQLException {
-        String select = "select * from producto where idProducto = ?";
+        String select = "select * from Producto where idProducto = ?";
         PreparedStatement ps = conn.prepareStatement(select);
         ps.setInt(1, idProducto);
         ResultSet rs = ps.executeQuery();
-        return new Producto(rs.getInt("idProducto"), rs.getString("nombre"), rs.getInt("valor"));
+        return new Producto(rs.getInt("idProducto"), rs.getString("nombre"), rs.getFloat("valor"));
     }
 
     @Override
     public List<Producto> getProductos() throws SQLException {
         ArrayList<Producto> result = new ArrayList<Producto>();
-        String select = "SELECT * FROM productos";
+        String select = "SELECT * FROM Productos";
         PreparedStatement ps = this.conn.prepareStatement(select);
 
         //ResultSet guardara el resultado al ejecutar el estado de la consulta
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            result.add(new Producto(rs.getInt("idProducto"), rs.getString("nombre"), rs.getInt("valor")));
+            result.add(new Producto(rs.getInt("idProducto"), rs.getString("nombre"), rs.getFloat("valor")));
         }
         return result;
-
     }
-
 }
