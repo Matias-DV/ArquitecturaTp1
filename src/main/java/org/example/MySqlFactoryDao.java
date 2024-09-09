@@ -16,7 +16,7 @@ public class MySqlFactoryDao extends FactoryDao {
     private static MySqlFactoryDao instance = null;
 
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    public static final String uri = "jdbc:mysql://localhost:3306/Entrega1";
+    public static final String uri = "jdbc:mysql://localhost:6432/Arquitp1E?createDatabaseIfNotExist=true";
     public static Connection conn;
 
     private MySqlFactoryDao() {
