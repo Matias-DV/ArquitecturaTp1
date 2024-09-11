@@ -1,4 +1,7 @@
-package org.example;
+package org.example.jdbcsql;
+
+import org.example.dao.ClienteDao;
+import org.example.entities.Cliente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,12 +72,12 @@ public class ClienteJDBC_MySql implements ClienteDao {
                 int rowsAffected = psUpdate.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    System.out.println("Factura producto actualizado con éxito.");
+                    System.out.println("Cliente actualizado con éxito.");
                 } else {
-                    System.out.println("No se pudo actualizar la factura.");
+                    System.out.println("No se pudo actualizar el/la Cliente.");
                 }
             } else {
-                System.out.println("factura no encontrada.");
+                System.out.println("Cliente no encontrada.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,6 +93,7 @@ public class ClienteJDBC_MySql implements ClienteDao {
             if (psUpdate != null) {
                 psUpdate.close();
             }
+            conn.commit();
         }
     }
         @Override
@@ -119,12 +123,12 @@ public class ClienteJDBC_MySql implements ClienteDao {
                     int rowsAffected = psDelete.executeUpdate();
 
                     if (rowsAffected > 0) {
-                        System.out.println("Producto eliminado con éxito.");
+                        System.out.println("Cliente eliminado con éxito.");
                     } else {
-                        System.out.println("No se pudo eliminar el producto.");
+                        System.out.println("No se pudo eliminar el Cliente.");
                     }
                 } else {
-                    System.out.println("Producto no encontrado.");
+                    System.out.println("Cliente no encontrado.");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -151,7 +155,11 @@ public class ClienteJDBC_MySql implements ClienteDao {
             PreparedStatement ps = conn.prepareStatement(select);
             ps.setInt(1, idCliente);
             ResultSet rs = ps.executeQuery();
-            return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("email"));
+            if (rs.next()) {
+                return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("email"));
+            } else {
+                return null; // o lanzar una excepción si el producto no se encuentra
+            }
         }
 
         @Override
@@ -169,5 +177,26 @@ public class ClienteJDBC_MySql implements ClienteDao {
             return result;
         }
 
+    @Override
+    public List<Cliente> getMasFacturadosOrdenados() throws SQLException {
+        ArrayList<Cliente> result = new ArrayList<Cliente>();
+        String select = "SELECT c.idCliente, c.nombre, c.email, SUM(fp.cantidad * p.valor) AS total_facturado " +
+                "FROM Cliente c " +
+                "JOIN Factura f ON c.idCliente = f.idCliente " +
+                "JOIN Factura_Producto fp ON f.idFactura = fp.idFactura " +
+                "JOIN Producto p ON fp.idProducto = p.idProducto " +
+                "GROUP BY c.idCliente, c.nombre, c.email " +
+                "ORDER BY total_facturado DESC";
+
+        PreparedStatement ps = this.conn.prepareStatement(select);
+
+        //ResultSet guardara el resultado al ejecutar el estado de la consulta
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            result.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("email")));
+        }
+        return result;
+    }
 
 }

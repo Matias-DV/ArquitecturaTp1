@@ -1,4 +1,7 @@
-package org.example;
+package org.example.jdbcsql;
+
+import org.example.dao.FacturaDao;
+import org.example.entities.Factura;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,7 +69,7 @@ public class FacturaJDBC_MySql implements FacturaDao {
                 int rowsAffected = psUpdate.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    System.out.println("Factura producto actualizado con éxito.");
+                    System.out.println("Factura actualizado con éxito.");
                 } else {
                     System.out.println("No se pudo actualizar la factura.");
                 }
@@ -87,6 +90,7 @@ public class FacturaJDBC_MySql implements FacturaDao {
             if (psUpdate != null) {
                 psUpdate.close();
             }
+            con.commit();
         }
     }
 
@@ -138,6 +142,7 @@ public class FacturaJDBC_MySql implements FacturaDao {
             if (psDelete != null) {
                 psDelete.close();
             }
+            con.commit();
         }
     }
 
@@ -147,7 +152,11 @@ public class FacturaJDBC_MySql implements FacturaDao {
         PreparedStatement ps = con.prepareStatement(select);
         ps.setInt(1, idFactura);
         ResultSet rs = ps.executeQuery();
-        return new Factura(rs.getInt("idFactura"), rs.getInt("idCliente"));
+        if (rs.next()) {
+            return new Factura(rs.getInt("idFactura"), rs.getInt("idCliente"));
+        } else {
+            return null; // o lanzar una excepción si el producto no se encuentra
+        }
     }
 
     @Override

@@ -1,4 +1,7 @@
-package org.example;
+package org.example.jdbcsql;
+
+import org.example.dao.ProductoDao;
+import org.example.entities.Producto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductoJDBC_MySql implements  ProductoDao{
+public class ProductoJDBC_MySql implements ProductoDao {
     private Connection conn;
 
     public ProductoJDBC_MySql(Connection conn) {
@@ -150,14 +153,20 @@ public class ProductoJDBC_MySql implements  ProductoDao{
         PreparedStatement ps = conn.prepareStatement(select);
         ps.setInt(1, idProducto);
         ResultSet rs = ps.executeQuery();
-        return new Producto(rs.getInt("idProducto"), rs.getString("nombre"), rs.getFloat("valor"));
+
+        // Verificar si hay un resultado
+        if (rs.next()) {
+            return new Producto(rs.getInt("idProducto"), rs.getString("nombre"), rs.getFloat("valor"));
+        } else {
+            return null; // o lanzar una excepción si el producto no se encuentra
+        }
     }
 
     @Override
     public List<Producto> getProductos() throws SQLException {
         ArrayList<Producto> result = new ArrayList<Producto>();
-        String select = "SELECT * FROM Productos";
-        PreparedStatement ps = this.conn.prepareStatement(select);
+        String select = "SELECT * FROM Producto";
+        PreparedStatement ps = conn.prepareStatement(select);
 
         //ResultSet guardara el resultado al ejecutar el estado de la consulta
         ResultSet rs = ps.executeQuery();
@@ -166,5 +175,22 @@ public class ProductoJDBC_MySql implements  ProductoDao{
             result.add(new Producto(rs.getInt("idProducto"), rs.getString("nombre"), rs.getFloat("valor")));
         }
         return result;
+    }
+
+    public Producto getProductoMasVendido() throws SQLException {
+        String select = "SELECT p.idProducto, p.nombre, p.valor, SUM(pf.cantidad * p.valor) AS recaudacion "
+                + "FROM Producto p "
+                + "JOIN Factura_Producto pf ON p.idProducto = pf.idProducto "
+                + "GROUP BY p.idProducto "
+                + "ORDER BY recaudacion DESC "
+                + "LIMIT 1";
+        PreparedStatement ps = conn.prepareStatement(select);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return new Producto(rs.getInt("idProducto"), rs.getString("nombre"), rs.getFloat("valor"));
+        } else {
+            return null; // o lanzar una excepción si el producto no se encuentra
+        }
     }
 }

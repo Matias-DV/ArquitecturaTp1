@@ -1,4 +1,9 @@
-package org.example;
+package org.example.factory;
+import org.example.dao.ClienteDao;
+import org.example.dao.FacturaDao;
+import org.example.dao.FacturaProductoDao;
+import org.example.jdbcsql.ProductoJDBC_MySql;
+
 import java.sql.SQLException;
 
 public abstract class FactoryDao {

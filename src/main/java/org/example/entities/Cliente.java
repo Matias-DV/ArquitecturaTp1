@@ -1,4 +1,4 @@
-package org.example;
+package org.example.entities;
 
 public class Cliente {
 
@@ -34,5 +34,9 @@ public class Cliente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void imprimir(){
+        System.out.println("Id: " + idCliente + " Nombre: " + nombre + " Email: " + email);
     }
 }

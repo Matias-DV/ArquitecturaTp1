@@ -1,4 +1,8 @@
-package org.example;
+package org.example.jdbcsql;
+
+import org.example.dao.FacturaProductoDao;
+import org.example.entities.FacturaProducto;
+import org.example.entities.Producto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +41,7 @@ public class FacturaProductoJDBC_MySql implements FacturaProductoDao {
     }
 
     @Override
-    public void updateFacturaProducto(FacturaProducto idFactura) throws SQLException {
+    public void updateFacturaProducto(FacturaProducto Factura) throws SQLException {
         // Consulta para verificar si el producto factura existe
         String select = "SELECT * FROM Factura_Producto WHERE idFactura = ?";
         PreparedStatement psSelect = null;
@@ -47,19 +51,20 @@ public class FacturaProductoJDBC_MySql implements FacturaProductoDao {
         try {
             //Preparando el SELECT para verificar la existencia de la factura
             psSelect = conn.prepareStatement(select);
-            psSelect.setInt(1, idFactura.getIdFactura());
+            psSelect.setInt(1, Factura.getIdFactura());
             rs = psSelect.executeQuery();
 
             // Si la factura existe, actualizamos
             if (rs.next()) {
                 // Consulta para actualizar la factura
-                String update = "UPDATE Factura_Producto SET idProducto = ?, cantidad = ? WHERE idFactura = ?";
+                String update = "UPDATE Factura_Producto SET cantidad = ? WHERE idFactura = ? AND idProducto = ?";
 
                 // Preparando la actualización
                 psUpdate = conn.prepareStatement(update);
-                psUpdate.setInt(1, idFactura.getIdFactura());
-                psUpdate.setInt(2, idFactura.getIdProducto());
-                psUpdate.setInt(3, idFactura.getCantidad());
+
+                psUpdate.setInt(1, Factura.getCantidad());
+                psUpdate.setInt(2, Factura.getIdFactura());
+                psUpdate.setInt(3,Factura.getIdProducto());
 
 
                 // Ejecutando la actualización
@@ -93,11 +98,11 @@ public class FacturaProductoJDBC_MySql implements FacturaProductoDao {
     }
 
     @Override
-    public void deleteFacturaProducto(int idFactura) throws SQLException {
+    public void deleteFacturaProducto(int idFactura, int idProducto) throws SQLException {
         // Consulta para verificar si la factura existe
-        String select = "SELECT * FROM Factura_Producto WHERE idFactura = ?";
+        String select = "SELECT * FROM Factura_Producto WHERE idFactura = ? AND idProducto = ?";
         // Consulta para eliminar la factura
-        String delete = "DELETE FROM Factura_Producto WHERE idFactura = ?";
+        String delete = "DELETE FROM Factura_Producto WHERE idFactura = ?  AND idProducto = ?";
 
         PreparedStatement psSelect = null;
         PreparedStatement psDelete = null;
@@ -107,6 +112,7 @@ public class FacturaProductoJDBC_MySql implements FacturaProductoDao {
             // Preparar el SELECT para verificar la existencia de la factura
             psSelect = conn.prepareStatement(select);
             psSelect.setInt(1, idFactura);
+            psSelect.setInt(2, idProducto);
             rs = psSelect.executeQuery();
 
             // Si la factura existe, se elimina
@@ -114,6 +120,7 @@ public class FacturaProductoJDBC_MySql implements FacturaProductoDao {
                 // Preparar la eliminación
                 psDelete = conn.prepareStatement(delete);
                 psDelete.setInt(1, idFactura);
+                psDelete.setInt(2, idProducto);
 
                 // Ejecutar la eliminación
                 int rowsAffected = psDelete.executeUpdate();
@@ -141,15 +148,21 @@ public class FacturaProductoJDBC_MySql implements FacturaProductoDao {
                 psDelete.close();
             }
         }
+        conn.commit();
     }
 
     @Override
-    public FacturaProducto getFactura(int idFactura) throws SQLException {
-        String select = "select * from Factura_Producto where idFactura = ?";
+    public FacturaProducto getFacturaProducto(int idFactura, int idProducto) throws SQLException {
+        String select = "select * from Factura_Producto where idFactura = ? AND idProducto = ?";
         PreparedStatement ps = conn.prepareStatement(select);
         ps.setInt(1, idFactura);
+        ps.setInt(2, idProducto);
         ResultSet rs = ps.executeQuery();
-        return new FacturaProducto(rs.getInt("idFactura"), rs.getInt("idProducto"), rs.getInt("cantidad"));
+        if (rs.next()) {
+            return new FacturaProducto(rs.getInt("idFactura"), rs.getInt("idProducto"), rs.getInt("cantidad"));
+        } else {
+            return null; // o lanzar una excepción si el producto no se encuentra
+        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.entities;
 
 public class FacturaProducto {
     private int idFactura;
@@ -21,5 +21,9 @@ public class FacturaProducto {
 
     public int getCantidad() {
         return cantidad;
+    }
+
+    public void imprimir(){
+        System.out.println("idFactura: " + idFactura + ", idProducto: " + idProducto + ", cantidad: " + cantidad);
     }
 }

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.entities;
 
 public class Factura {
     private int idFactura;
@@ -16,6 +16,10 @@ public class Factura {
 
     public int getIdCliente() {
         return idCliente;
+    }
+
+    public void imprimirFactura() {
+        System.out.println("Factura ID: " + idFactura + " Cliente: " + idCliente);
     }
 
 }
