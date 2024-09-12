@@ -71,12 +71,12 @@ public class FacturaProductoJDBC_MySql implements FacturaProductoDao {
                 int rowsAffected = psUpdate.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    System.out.println("Factura producto actualizado con éxito.");
+                    System.out.println("FacturaProducto actualizado con éxito.");
                 } else {
-                    System.out.println("No se pudo actualizar la factura.");
+                    System.out.println("No se pudo actualizar la facturaProducto.");
                 }
             } else {
-                System.out.println("factura no encontrada.");
+                System.out.println("facturaProducto no encontrada.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,12 +126,12 @@ public class FacturaProductoJDBC_MySql implements FacturaProductoDao {
                 int rowsAffected = psDelete.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    System.out.println("Factura eliminada con éxito.");
+                    System.out.println("FacturaProducto eliminada con éxito.");
                 } else {
-                    System.out.println("No se pudo eliminar la factura.");
+                    System.out.println("No se pudo eliminar la facturaProducto.");
                 }
             } else {
-                System.out.println("Factura no encontrada.");
+                System.out.println("FacturaProducto no encontrada.");
             }
         } catch (SQLException e) {
             e.printStackTrace();

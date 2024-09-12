@@ -37,6 +37,6 @@ public class Cliente {
     }
 
     public void imprimir(){
-        System.out.println("Id: " + idCliente + " Nombre: " + nombre + " Email: " + email);
+        System.out.println("Id: " + idCliente + " , Nombre: " + nombre + " , Email: " + email);
     }
 }

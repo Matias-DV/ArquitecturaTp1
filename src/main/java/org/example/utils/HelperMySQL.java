@@ -213,7 +213,6 @@ public class HelperMySQL {
         }
     }
 
-
     //Insertar SQL de cliente
     private int insertCliente (Cliente cliente, Connection conn) throws Exception{
         String insert = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";

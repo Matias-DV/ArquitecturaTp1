@@ -28,7 +28,7 @@ public class Producto {
     }
 
     public void imprimir(){
-        System.out.println("Id: " + id + " Nombre: " + nombre + " Valor: " + valor);
+        System.out.println("Id: " + id + " , Nombre: " + nombre + " , Valor: " + valor);
     }
 
 }

@@ -44,7 +44,7 @@ public class ClienteJDBC_MySql implements ClienteDao {
 
     @Override
     public void updateCliente(Cliente cliente) throws SQLException {
-// Consulta para verificar si el producto factura existe
+    // Consulta para verificar si el producto factura existe
         String select = "SELECT * FROM Cliente WHERE idCliente = ?";
         PreparedStatement psSelect = null;
         PreparedStatement psUpdate = null;
@@ -96,87 +96,89 @@ public class ClienteJDBC_MySql implements ClienteDao {
             conn.commit();
         }
     }
-        @Override
-        public void deleteCliente (int idCliente) throws SQLException {
-            // Consulta para verificar si el producto existe
-            String select = "SELECT * FROM Cliente WHERE idCliente = ?";
-            // Consulta para eliminar el producto
-            String delete = "DELETE FROM Cliente WHERE idCliente = ?";
+    @Override
+    public void deleteCliente (int idCliente) throws SQLException {
+        // Consulta para verificar si el producto existe
+        String select = "SELECT * FROM Cliente WHERE idCliente = ?";
+        // Consulta para eliminar el producto
+        String delete = "DELETE FROM Cliente WHERE idCliente = ?";
 
-            PreparedStatement psSelect = null;
-            PreparedStatement psDelete = null;
-            ResultSet rs = null;
+        PreparedStatement psSelect = null;
+        PreparedStatement psDelete = null;
+        ResultSet rs = null;
 
-            try {
-                // Preparar el SELECT para verificar la existencia del producto
-                psSelect = conn.prepareStatement(select);
-                psSelect.setInt(1, idCliente);
-                rs = psSelect.executeQuery();
+        try {
+            // Preparar el SELECT para verificar la existencia del producto
+            psSelect = conn.prepareStatement(select);
+            psSelect.setInt(1, idCliente);
+            rs = psSelect.executeQuery();
 
-                // Si el producto existe, se elimina
-                if (rs.next()) {
-                    //Preparar la eliminación
-                    psDelete = conn.prepareStatement(delete);
-                    psDelete.setInt(1, idCliente);
-
-                    //Ejecutar la eliminación
-                    int rowsAffected = psDelete.executeUpdate();
-
-                    if (rowsAffected > 0) {
-                        System.out.println("Cliente eliminado con éxito.");
-                    } else {
-                        System.out.println("No se pudo eliminar el Cliente.");
-                    }
-                } else {
-                    System.out.println("Cliente no encontrado.");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw e; // Relanzar la excepción para que la maneje la capa superior
-            } finally {
-                // Cerrar ResultSet y PreparedStatement
-                if (rs != null) {
-                    rs.close();
-                }
-                if (psSelect != null) {
-                    psSelect.close();
-                }
-                if (psDelete != null) {
-                    psDelete.close();
-                }
-
-                conn.commit();
-            }
-        }
-
-        @Override
-        public Cliente getCliente (int idCliente) throws SQLException {
-            String select = "select * from Cliente where idCliente = ?";
-            PreparedStatement ps = conn.prepareStatement(select);
-            ps.setInt(1, idCliente);
-            ResultSet rs = ps.executeQuery();
+            // Si el producto existe, se elimina
             if (rs.next()) {
-                return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("email"));
+                //Preparar la eliminación
+                psDelete = conn.prepareStatement(delete);
+                psDelete.setInt(1, idCliente);
+
+                //Ejecutar la eliminación
+                int rowsAffected = psDelete.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Cliente eliminado con éxito.");
+                } else {
+                    System.out.println("No se pudo eliminar el Cliente.");
+                }
             } else {
-                return null; // o lanzar una excepción si el producto no se encuentra
+                System.out.println("Cliente no encontrado.");
             }
-        }
-
-        @Override
-        public List<Cliente> getClientes () throws SQLException {
-            ArrayList<Cliente> result = new ArrayList<Cliente>();
-            String select = "SELECT * FROM Cliente";
-            PreparedStatement ps = this.conn.prepareStatement(select);
-
-            //ResultSet guardara el resultado al ejecutar el estado de la consulta
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                result.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("email")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e; // Relanzar la excepción para que la maneje la capa superior
+        } finally {
+            // Cerrar ResultSet y PreparedStatement
+            if (rs != null) {
+                rs.close();
             }
-            return result;
-        }
+            if (psSelect != null) {
+                psSelect.close();
+            }
+            if (psDelete != null) {
+                psDelete.close();
+            }
 
+            conn.commit();
+        }
+    }
+
+    @Override
+    public Cliente getCliente (int idCliente) throws SQLException {
+        String select = "select * from Cliente where idCliente = ?";
+        PreparedStatement ps = conn.prepareStatement(select);
+        ps.setInt(1, idCliente);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("email"));
+        } else {
+            return null; // o lanzar una excepción si el producto no se encuentra
+        }
+    }
+
+    @Override
+    public List<Cliente> getClientes () throws SQLException {
+        ArrayList<Cliente> result = new ArrayList<Cliente>();
+        String select = "SELECT * FROM Cliente";
+        PreparedStatement ps = this.conn.prepareStatement(select);
+
+        //ResultSet guardara el resultado al ejecutar el estado de la consulta
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            result.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("email")));
+        }
+        return result;
+    }
+
+
+        //Enunciado 4
     @Override
     public List<Cliente> getMasFacturadosOrdenados() throws SQLException {
         ArrayList<Cliente> result = new ArrayList<Cliente>();
@@ -198,5 +200,4 @@ public class ClienteJDBC_MySql implements ClienteDao {
         }
         return result;
     }
-
 }
