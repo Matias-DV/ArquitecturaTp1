@@ -25,6 +25,10 @@ public class Estudiante {
 
     }
 
+    public Estudiante(int dni) {
+        this.dni = dni;
+    }
+
     public Estudiante(String nombre, String apellido, int edad, String genero, int dni, String ciudad, int legajo) {
         this.nombre = nombre;
         this.apellido = apellido;

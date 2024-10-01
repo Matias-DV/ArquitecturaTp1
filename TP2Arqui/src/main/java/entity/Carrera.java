@@ -3,7 +3,7 @@ package entity;
 import jakarta.persistence.*;
 
 @Entity
-public class    Carrera {
+public class Carrera {
 
     @Id
     @Column(name="ID_Carrera")
@@ -16,8 +16,9 @@ public class    Carrera {
 
     }
 
-    public Carrera( String nombre) {
-        Nombre = nombre;
+    public Carrera( String nombre, Long id) {
+        this.Nombre = nombre;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -32,6 +33,9 @@ public class    Carrera {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
     @Override
     public String toString() {
         return "Carrera{" +

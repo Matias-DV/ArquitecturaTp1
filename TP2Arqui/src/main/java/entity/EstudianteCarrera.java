@@ -2,9 +2,6 @@ package entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
-
-
 @Entity
 public class EstudianteCarrera {
     @Id
@@ -20,27 +17,30 @@ public class EstudianteCarrera {
     @Column(nullable = false)
     private boolean esGraduado;
     @Column
-    private Date fechaInscripcion;
+    private int fechaInscripcion;
     @Column
-    private Date fechaEgreso;
+    private int fechaEgreso;
 
-    public EstudianteCarrera(int antiguedad, boolean esGraduado, Date fechaInscripcion, Date fechaEgreso) {
+    public EstudianteCarrera(int antiguedad, boolean esGraduado, int fechaInscripcion, int fechaEgreso, Carrera Carrera, Estudiante estudiante) {
         this.antiguedad = antiguedad;
         this.esGraduado = esGraduado;
         this.fechaInscripcion = fechaInscripcion;
         this.fechaEgreso = fechaEgreso;
+        this.Carrera = Carrera;
+        this.estudiante = estudiante;
     }
 
     public EstudianteCarrera() {
 
     }
-    public Date getFechaEgreso() {
+    public int getFechaEgreso() {
         return fechaEgreso;
     }
 
-    public Date getFechaInscripcion() {
+    public int getFechaInscripcion() {
         return fechaInscripcion;
     }
+
     public int getAntiguedad() {
         return antiguedad;
     }
@@ -57,7 +57,7 @@ public class EstudianteCarrera {
         this.esGraduado = esGraduado;
     }
 
-    public void setCarrera(entity.Carrera carrera) {
+    public void setCarrera(Carrera carrera) {
         Carrera = carrera;
     }
 

@@ -79,16 +79,20 @@ public class EstudianteCarreraRepositoryImp implements EstudianteCarreraReposito
         return resultados;
     }
     @Override
-    public List<Carrera> reporteCarreras() {
-        List<Carrera> reporte;
-        TypedQuery<Carrera> query = em.createQuery("SELECT c.Nombre AS carrera, DATE_SUB(CURDATE(), INTERVAL ec.antiguedad YEAR) AS fecha_calculada COUNT(CASE WHEN ec.esGraduado = false THEN 1 END) AS inscriptos COUNT(CASE WHEN ec.esGraduado = true THEN 1 END) AS egresados FROM EstudianteCarrera ec " +
-                " JOIN " +
-                "    Carrera c ON ec.Carrera.id = c.id " +
-                " GROUP BY " +
-                "    c.nombre, ec.antiguedad " +
-                " ORDER BY " +
-                "    c.nombre ASC, ec.antiguedad ASC", Carrera.class);
+    public List<CarreraDTO> reporteCarreras() {
+        List<CarreraDTO> reporte;
+        String jpql = "SELECT c.nombre AS carrera, " +
+                "ec.fechaInscripcion AS año, " +
+                "COUNT(CASE WHEN ec.esGraduado = false THEN 1 END) AS inscriptos, " +
+                "COUNT(CASE WHEN ec.esGraduado = true THEN 1 END) AS egresados, " +
+                "       e.dni, e.nombre, e.apellido " +
+                "FROM EstudianteCarrera ec " +
+                "JOIN Carrera c ON ec.id_carrera = c.id_carrera " +
+                "JOIN Estudiante e ON ec.dni = e.dni " +
+                "GROUP BY c.nombre, ec.fechaInscripcion, e.dni, e.nombre, e.apellido " +
+                "ORDER BY c.nombre, ec.fechaInscripcion, e.apellido ";
 
+        Query query = em.createQuery(jpql, CarreraDTO.class);
         reporte = query.getResultList();
         return reporte;
     }
