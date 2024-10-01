@@ -3,9 +3,6 @@ package dto;
 public class CarreraDTO {
         private String nombreCarrera;
         private Long cantidadInscriptos;
-        private int fechaIngreso;
-        private int fechaEgreso;
-
 
         public CarreraDTO(String nombreCarrera, Long cantidadInscriptos) {
             this.nombreCarrera = nombreCarrera;

@@ -1,5 +1,6 @@
 import dto.CarreraDTO;
 import dto.EstudianteDTO;
+import dto.RegistroCarrerasDTO;
 import entity.Carrera;
 import entity.Estudiante;
 import entity.EstudianteCarrera;
@@ -25,23 +26,12 @@ public class Main {
         EntityTransaction transaction = em.getTransaction();
         em.getTransaction().begin();
 
-        CarreraRepository carreraRepository = new CarreraRepositoryImp(em);
-
-        Carrera c10 = new Carrera("Fisica",10L);
-        Carrera c = carreraRepository.getCarrera(c10);
-
-
-        EstudianteRepositoryImp estudianteRepository = new EstudianteRepositoryImp(em);
-
-        Estudiante e1 = new Estudiante(88775566);
-        Estudiante e = estudianteRepository.getEstudiante(e1);
-
-        int inicio = 2015;
-        int fin = 2024;
-
-        EstudianteCarrera estudianteCarrera = new EstudianteCarrera(2,false,inicio,fin,c,e);
+        List<RegistroCarrerasDTO> registroCarrerasDTOS = new ArrayList<>();
         EstudianteCarreraRepositoryImp estudianteCarreraRepositoryImp = new EstudianteCarreraRepositoryImp(em);
-        estudianteCarreraRepositoryImp.addEstudianteCarrera(estudianteCarrera);
+        registroCarrerasDTOS = estudianteCarreraRepositoryImp.reporteCarreras();
+        for (RegistroCarrerasDTO dto : registroCarrerasDTOS) {
+            System.out.println(dto.toString());
+        }
 
       //System.out.println("   ----------------------------------------   ");
 

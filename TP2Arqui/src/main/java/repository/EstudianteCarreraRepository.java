@@ -2,6 +2,7 @@ package repository;
 
 import dto.CarreraDTO;
 import dto.EstudianteDTO;
+import dto.RegistroCarrerasDTO;
 import entity.Carrera;
 import entity.Estudiante;
 import entity.EstudianteCarrera;
@@ -16,5 +17,5 @@ public interface EstudianteCarreraRepository {
     void deleteCarrera(Estudiante estudiante, Carrera carrera);
     List<EstudianteDTO>getEstudiantesByCarreraFiltroCiudad(String carrera, String ciudad);
     List<CarreraDTO>getCarrerasInscriptosOrdenadas();
-    List<CarreraDTO>reporteCarreras();
+    List<RegistroCarrerasDTO>reporteCarreras();
 }
