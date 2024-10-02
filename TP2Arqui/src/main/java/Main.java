@@ -8,15 +8,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import repository.CarreraRepository;
 import repository.CarreraRepositoryImp;
 import repository.EstudianteCarreraRepositoryImp;
 import repository.EstudianteRepositoryImp;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Main {
@@ -26,60 +22,64 @@ public class Main {
         EntityTransaction transaction = em.getTransaction();
         em.getTransaction().begin();
 
-        List<RegistroCarrerasDTO> registroCarrerasDTOS = new ArrayList<>();
+        EstudianteRepositoryImp estudianteRepository = new EstudianteRepositoryImp(em);
+        CarreraRepositoryImp carreraRepository = new CarreraRepositoryImp(em);
         EstudianteCarreraRepositoryImp estudianteCarreraRepositoryImp = new EstudianteCarreraRepositoryImp(em);
+
+        //Enunciado 2
+        //a) dar de alta un estudiante
+        Estudiante estudiante = new Estudiante("lucas","ferreiro",30,"Masculino",42777903,"vela", 20245);
+        estudianteRepository.addEstudiante(estudiante);
+
+        //b) matricular un estudiante en una carrera
+        List<Carrera> carreras = new ArrayList<>();
+        carreras = carreraRepository.getCarreras();
+        Carrera carrera = carreraRepository.getCarrera(carreras.get(0));
+        EstudianteCarrera estudianteCarrera = new EstudianteCarrera(4,false,2019,2026,carrera,estudiante);
+        estudianteCarreraRepositoryImp.addEstudianteCarrera(estudianteCarrera);
+
+        //c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+        List<EstudianteDTO> estudianteDTOSbyApellido = estudianteRepository.getEstudiantesOrdenadosByApellido();
+        for (EstudianteDTO estudianteDTO : estudianteDTOSbyApellido) {
+            System.out.println(estudianteDTO.toString());
+        }
+
+        //d) recuperar un estudiante, en base a su número de libreta universitaria.
+        EstudianteDTO estudianteDTO = estudianteRepository.getEstudianteByLegajo(20245);
+        System.out.println(estudianteDTO.toString());
+
+
+
+        //e) recuperar todos los estudiantes, en base a su género.
+
+        List<EstudianteDTO> estudianteDTOSbyGenero = estudianteRepository.getEstudiantesByGenero("Masculino");
+        for (EstudianteDTO est : estudianteDTOSbyGenero) {
+            System.out.println(est.imprimirConGenero());
+        }
+
+
+        //f) recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
+        List<CarreraDTO> estudianteCarreraDTOS = estudianteCarreraRepositoryImp.getCarrerasInscriptosOrdenadas();
+        for (CarreraDTO carreraDTO : estudianteCarreraDTOS) {
+            System.out.println(carreraDTO.toString());
+        }
+
+        //g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de resid
+        List<EstudianteDTO> estudianteDTOSbyCiudad = estudianteCarreraRepositoryImp.getEstudiantesByCarreraFiltroCiudad("Derecho","Moreno");
+        for (EstudianteDTO estudianteD : estudianteDTOSbyCiudad) {
+            System.out.println(estudianteD.imprimirConCiudadCarrera());
+        }
+
+        System.out.println("------------------------------------------------------------------");
+
+        //Enuncuado 3
+        List<RegistroCarrerasDTO> registroCarrerasDTOS;
         registroCarrerasDTOS = estudianteCarreraRepositoryImp.reporteCarreras();
         for (RegistroCarrerasDTO dto : registroCarrerasDTOS) {
             System.out.println(dto.toString());
         }
 
-      //System.out.println("   ----------------------------------------   ");
-
- /*       List<EstudianteDTO> estudiantes1;
-        String genero = "Masculino";
-        estudiantes1 = estudianteRepository.getEstudiantesByGenero(genero);
-
-        for (EstudianteDTO estudiante : estudiantes1) {
-            System.out.println(estudiante.imprimirConGenero());
-        }
-
-        System.out.println("   ----------------------------------------   ");
-/*
-        EstudianteDTO estudiantes2 = estudianteRepository.getEstudianteByLegajo(1001);
-        System.out.println(estudiantes2.toString());
-
-
-        System.out.println("   ----------------------------------------   ");
-
-        Chequear porque solo muestra la consulta sql
-        List<EstudianteDTO> estudiantes = new ArrayList<>();
-        estudiantes = estudiantecarreraRepository.getEstudiantesByCarreraFiltroCiudad("Química","Tucumán");
-
-        for (EstudianteDTO est : estudiantes) {
-            System.out.println(est.imprimirConCiudadCarrera());
-        }
-
-        System.out.println("   ----------------------------------------   ");
-
-        //Chequear este metodo porque no anda
-       List<CarreraDTO> carreras;
-        carreras = estudiantecarreraRepository.getCarrerasInscriptosOrdenadas();
-
-*/
-    /*    System.out.println("   ----------------------------------------   ");
-
-        //Chequear este metodo porque no anda
-        List<Carrera> carreras1 = new ArrayList<>();
-        carreras1 = estudiantecarreraRepository.reporteCarreras();
-
-        for (Carrera c : carreras1) {
-            System.out.println(c);
-        }*/
-
-        /*List<EstudianteDTO>estudiantes = estudianteRepository.getEstudiantesOrdenadosByApellido();
-        for(EstudianteDTO estudiante : estudiantes){
-            System.out.println(estudiante.toString());
-        }*/
+        System.out.println("-------------------------------------------------------------------");
 
         transaction.commit();
         em.close();

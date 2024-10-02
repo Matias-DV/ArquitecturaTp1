@@ -59,7 +59,7 @@ public class EstudianteCarreraRepositoryImp implements EstudianteCarreraReposito
     @Override
     public List<EstudianteDTO> getEstudiantesByCarreraFiltroCiudad(String carrera, String ciudad) {
         List<EstudianteDTO> estudiantes;
-        String jpql = "SELECT new dto.EstudianteDTO(ec.estudiante.dni, ec.estudiante.nombre, ec.estudiante.apellido, ec.estudiante.legajo, ec.estudiante.ciudad, ec.Carrera.Nombre, ec.estudiante.genero) from EstudianteCarrera ec where ec.estudiante.ciudad=:ciudad and ec.Carrera.Nombre=:carrera";
+        String jpql = "SELECT new dto.EstudianteDTO(ec.estudiante.dni, ec.estudiante.nombre, ec.estudiante.apellido, ec.estudiante.legajo, ec.estudiante.ciudad, ec.Carrera.nombre, ec.estudiante.genero) from EstudianteCarrera ec where ec.estudiante.ciudad=:ciudad and ec.Carrera.nombre=:carrera";
         Query query = em.createQuery(jpql, EstudianteDTO.class);
         query.setParameter("carrera", carrera);
         query.setParameter("ciudad", ciudad);
@@ -69,25 +69,24 @@ public class EstudianteCarreraRepositoryImp implements EstudianteCarreraReposito
 
     @Override
     public List<CarreraDTO> getCarrerasInscriptosOrdenadas() {
-        String jpql = "SELECT new dto.CarreraDTO(c.Nombre, COUNT(ec.Carrera.id)) " +
+        String jpql = "SELECT new dto.CarreraDTO(c.nombre, COUNT(ec.Carrera.id)) " +
                 "FROM EstudianteCarrera ec " +
                 "JOIN Carrera c ON ec.Carrera.id = c.id " +
-                "GROUP BY c.id, c.Nombre " +
+                "GROUP BY c.id, c.nombre " +
                 "ORDER BY COUNT(ec.Carrera.id) DESC";
 
         Query query = em.createQuery(jpql, CarreraDTO.class);
         List<CarreraDTO> resultados = query.getResultList();
-        System.out.println(resultados);
         return resultados;
     }
 
     private List<RegistroCarrerasDTO> getEgresadosByYear(){
         List<RegistroCarrerasDTO> reporte;
-        String jpql = "SELECT new dto.RegistroCarrerasDTO(c.Nombre,ec.fechaEgreso, null ,COUNT(e.dni)) FROM EstudianteCarrera ec " +
+        String jpql = "SELECT new dto.RegistroCarrerasDTO(c.nombre,ec.fechaEgreso, null ,COUNT(e.dni)) FROM EstudianteCarrera ec " +
                 "JOIN Carrera c ON ec.Carrera.id = c.id " +
                 "JOIN Estudiante e ON ec.estudiante.dni = e.dni " +
-                "GROUP BY c.Nombre, ec.fechaEgreso " +
-                "ORDER BY c.Nombre, ec.fechaEgreso ";
+                "GROUP BY c.nombre, ec.fechaEgreso " +
+                "ORDER BY c.nombre, ec.fechaEgreso ";
         Query query = em.createQuery(jpql, RegistroCarrerasDTO.class);
         reporte = query.getResultList();
         return reporte;
@@ -95,11 +94,11 @@ public class EstudianteCarreraRepositoryImp implements EstudianteCarreraReposito
 
     private List<RegistroCarrerasDTO> getInscriptosByYear(){
         List<RegistroCarrerasDTO> reporte;
-        String jpql = "SELECT new dto.RegistroCarrerasDTO(c.Nombre,ec.fechaInscripcion, COUNT(e.dni) , null ) FROM EstudianteCarrera ec " +
+        String jpql = "SELECT new dto.RegistroCarrerasDTO(c.nombre,ec.fechaInscripcion, COUNT(e.dni) , null ) FROM EstudianteCarrera ec " +
                 "JOIN Carrera c ON ec.Carrera.id = c.id " +
                 "JOIN Estudiante e ON ec.estudiante.dni = e.dni " +
-                "GROUP BY c.Nombre, ec.fechaInscripcion " +
-                "ORDER BY c.Nombre, ec.fechaInscripcion ";
+                "GROUP BY c.nombre, ec.fechaInscripcion " +
+                "ORDER BY c.nombre, ec.fechaInscripcion ";
         Query query = em.createQuery(jpql, RegistroCarrerasDTO.class);
         reporte = query.getResultList();
         return reporte;
@@ -111,6 +110,18 @@ public class EstudianteCarreraRepositoryImp implements EstudianteCarreraReposito
         List<RegistroCarrerasDTO> reporteaEgresados = this.getEgresadosByYear();
 
         List<RegistroCarrerasDTO> reporte = new ArrayList(reporteaInscriptos);
+
+        for (int i = 0; i < reporteaEgresados.size(); i++) {
+            for (int j = 0; j < reporteaInscriptos.size(); j++) {
+                if ( reporteaEgresados.get(i).getNombreCarrera().equals(reporteaInscriptos.get(j).getNombreCarrera()) &&
+                    reporteaEgresados.get(i).getAnio() == reporteaInscriptos.get(j).getAnio() ) {
+                    reporte.get(j).setCantEgresados(reporteaEgresados.get(i).getCantEgresados());
+                    reporteaEgresados.remove(i);
+                    i--;
+                }
+            }
+        }
+
         reporte.addAll(reporteaEgresados);
         reporte.sort(Comparator.comparing(RegistroCarrerasDTO::getNombreCarrera)
                 .thenComparing(RegistroCarrerasDTO::getAnio));

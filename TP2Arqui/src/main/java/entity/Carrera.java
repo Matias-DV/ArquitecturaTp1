@@ -10,23 +10,23 @@ public class Carrera {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String Nombre;
+    private String nombre;
 
     public Carrera() {
 
     }
 
     public Carrera( String nombre, Long id) {
-        this.Nombre = nombre;
+        this.nombre = nombre;
         this.id = id;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.nombre = nombre;
     }
 
     public Long getId() {
@@ -40,7 +40,7 @@ public class Carrera {
     public String toString() {
         return "Carrera{" +
                 "id=" + id +
-                ", Nombre='" + Nombre + '\'' +
+                ", Nombre='" + nombre + '\'' +
                 '}';
     }
 }
