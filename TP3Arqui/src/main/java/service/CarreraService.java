@@ -1,34 +1,36 @@
 package service;
 
+import dto.CarreraDTO;
 import entity.Carrera;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import repository.CarreraRepository;
 
 import java.util.List;
 
-public class CarreraService implements CarreraRepository {
+@Service
+public class CarreraService {
+
+    @Autowired
     private CarreraRepository carreraRepository;
-    @Override
-    public Carrera getCarrera(Carrera carrera) {
-        return null;
+
+    public Carrera getCarrera(Long id) {
+        return carreraRepository.getCarrera(id);
     }
 
-    @Override
-    public List<Carrera> getCarreras() {
-        return List.of();
+    public List<CarreraDTO> getCarreras() {
+        return carreraRepository.getCarreras();
     }
 
-    @Override
     public Carrera addCarrera(Carrera carrera) {
-        return carreraRepository.addCarrera( carrera );
+        return carreraRepository.save(carrera);
     }
 
-    @Override
-    public void updateCarrera(Carrera carrera) {
-
+    public void updateCarrera(String nombre, Long id) {
+        carreraRepository.updateCarrera(nombre, id);
     }
 
-    @Override
     public void deleteCarrera(Long carrera) {
-
+        carreraRepository.deleteCarrera(carrera);
     }
 }

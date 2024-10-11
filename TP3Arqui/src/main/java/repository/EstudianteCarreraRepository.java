@@ -1,27 +1,43 @@
 package repository;
 
 import dto.CarreraDTO;
+import dto.EstudianteCarreraDTO;
 import dto.EstudianteDTO;
 import dto.RegistroCarrerasDTO;
 import entity.Carrera;
 import entity.Estudiante;
 import entity.EstudianteCarrera;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCarrera, Long> {
 
-public interface EstudianteCarreraRepository {
+    @Query("SELECT ec FROM EstudianteCarrera ec WHERE ec.estudiante = :estudiante AND ec.Carrera = :carrera")
+    EstudianteCarrera getEstudianteCarrera(@Param("estudiante") Estudiante estudiante, @Param("carrera")Carrera carrera);
 
+    @Query("SELECT new dto.EstudianteCarreraDTO(ec.estudiante, ec.Carrera, ec.antiguedad, ec.esGraduado) FROM EstudianteCarrera ec")
+    List<EstudianteCarreraDTO> getEstudiantesCarreras();
 
-    @Query("SELECT ")
+    @Modifying
+    @Query("UPDATE EstudianteCarrera ec SET ec.estudiante = :estudiante, ec.Carrera = :carrera, ec.antiguedad = :antiguedad, ec.esGraduado = :esGraduado, ec.fechaInscripcion = :fechaInscripcion, ec.fechaEgreso = :fechaEgreso WHERE ec.Carrera.id = :idCarrera AND ec.estudiante.dni = :dniEstudiante")
+    void updateEstudianteCarrera(@Param("estudiante") Estudiante estudiante, @Param("carrera") Carrera carrera,
+                                 @Param("antiguedad")int antiguedad, @Param("esGraduado")boolean esGraduado,
+                                 @Param("fechaInscripcion") int fechaInscripcion, @Param("fechaEgreso")int fechaEgreso,
+                                 @Param("dniEstudiante")int dniEstudiante, @Param("idCarrera")Long idCarrera);
 
-    EstudianteCarrera getEstudianteCarrera(Estudiante estudiante, Carrera carrera);
-    List<EstudianteCarrera> getEstudiantesCarreras();
-    void addEstudianteCarrera(EstudianteCarrera estudianteCarrera);
-    void updateCarrera(EstudianteCarrera estudianteCarrera);
-    void deleteCarrera(Estudiante estudiante, Carrera carrera);
-    List<EstudianteDTO>getEstudiantesByCarreraFiltroCiudad(String carrera, String ciudad);
+    @Query("DELETE FROM EstudianteCarrera ec WHERE ec.estudiante = :estudiante AND ec.Carrera = :carrera")
+    void deleteCarrera(@Param("estudiante")Estudiante estudiante, @Param("carrera")Carrera carrera);
+
+    @Query("SELECT new dto.EstudianteCarreraDTO(ec.estudiante, ec.Carrera, ec.antiguedad, ec.esGraduado) FROM EstudianteCarrera ec WHERE ec.Carrera = :carrera AND ec.estudiante.ciudad = :ciudad")
+    List<EstudianteDTO>getEstudiantesByCarreraFiltroCiudad(@Param("carrera") Carrera carrera, @Param("ciudad") String ciudad);
+
+    @Query("SELECT new dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c ORDER BY COUNT(ec) DESC")
     List<CarreraDTO>getCarrerasInscriptosOrdenadas();
+
+    @Query("")
     List<RegistroCarrerasDTO>reporteCarreras();
 }
