@@ -38,6 +38,6 @@ public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCar
     @Query("SELECT new webApp.dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c ORDER BY COUNT(ec) DESC")
     List<CarreraDTO>getCarrerasInscriptosOrdenadas();
 
-    @Query("")
-    List<RegistroCarrerasDTO>reporteCarreras();
+  /*  @Query("")
+    List<RegistroCarrerasDTO>reporteCarreras();*/
 }

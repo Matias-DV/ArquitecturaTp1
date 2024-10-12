@@ -19,7 +19,7 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
 
     @Modifying
     @Query("UPDATE Estudiante e SET e.nombre = :nombre, e.apellido = :apellido, e.legajo = :legajo WHERE e.dni = :dni")
-    void updateEstudiante(@Param("estudiante") Estudiante estudiante);
+    void updateEstudiante(@Param("nombre") String nombre, @Param("apellido")String apellido, @Param("legajo")int legajo, @Param("dni") int dni);
 
     @Query("DELETE FROM Estudiante e WHERE e.dni = :dni")
     void deleteEstudiante(int dni);
@@ -30,6 +30,8 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     @Query("SELECT new webApp.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.legajo) FROM Estudiante e WHERE e.genero = :genero")
     List<EstudianteDTO>getEstudiantesByGenero(@Param("genero") String genero);
 
+    @Query("SELECT e FROM Estudiante e WHERE e.dni = :dni")
+    Estudiante getEstudianteByDni(int dni);
 
 
 }

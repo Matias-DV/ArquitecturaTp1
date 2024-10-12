@@ -5,12 +5,16 @@ import jakarta.persistence.*;
 
 @Entity
 public class EstudianteCarrera {
-    @Id
+    @EmbeddedId
+    private EstudianteCarreraId id;
+
     @ManyToOne
+    @MapsId("dni")
     @JoinColumn(name="dni")
     private Estudiante estudiante;
-    @Id
+
     @ManyToOne
+    @MapsId("idCarrera")
     @JoinColumn(name="ID_Carrera")
     private Carrera Carrera;
     @Column

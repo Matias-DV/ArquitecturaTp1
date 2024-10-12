@@ -27,7 +27,7 @@ public class EstudianteService {
     }
 
     public void updateEstudiante(Estudiante estudiante) {
-        estudianteRepository.updateEstudiante(estudiante);
+        estudianteRepository.updateEstudiante(estudiante.getNombre(), estudiante.getApellido(), estudiante.getLegajo(), estudiante.getDni());
     }
 
     public void deleteEstudiante(int dni) {
@@ -42,5 +42,8 @@ public class EstudianteService {
         return estudianteRepository.getEstudiantesByGenero(genero);
     }
 
+    public Estudiante getEstudianteByDni(int dni){
+        return estudianteRepository.getEstudianteByDni(dni);
+    }
 
 }

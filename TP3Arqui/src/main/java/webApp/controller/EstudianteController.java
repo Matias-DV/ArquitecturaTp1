@@ -11,7 +11,7 @@ import webApp.service.EstudianteService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Estudiante")
+@RequestMapping("/Estudiante")
 public class EstudianteController{
 
 @Autowired
@@ -22,12 +22,14 @@ public ResponseEntity<Estudiante> addEstudiante(@RequestBody Estudiante estudian
     Estudiante nuevoEstudiante = estudianteService.addEstudiante(estudiante);
     return new ResponseEntity<>(nuevoEstudiante, HttpStatus.CREATED);
 }
-
-@GetMapping("/legajo/{legajo}")
-public ResponseEntity<EstudianteDTO> getEstudianteByLegajo(@PathVariable int legajo) {
-    EstudianteDTO estudiante = estudianteService.getEstudianteByLegajo(legajo);
-    return new ResponseEntity<>(estudiante, HttpStatus.OK);
-}
+    @GetMapping("/legajo/{legajo}")
+    public ResponseEntity<EstudianteDTO> getEstudianteByLegajo(@PathVariable int legajo) {
+        EstudianteDTO estudiante = estudianteService.getEstudianteByLegajo(legajo);
+        if (estudiante == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(estudiante, HttpStatus.OK);
+    }
 
 @GetMapping("/genero/{genero}")
 public List<EstudianteDTO> getEstudiantesByGenero(@PathVariable String genero) {
@@ -41,8 +43,11 @@ public ResponseEntity<String> deleteEstudiante(@PathVariable int dni) {
 }
 
 @PutMapping("/update/{estudiante}")
-public ResponseEntity<String> updateEstudiante(@PathVariable Estudiante estudiante) {
-    estudianteService.updateEstudiante(estudiante);
+public ResponseEntity<String> updateEstudiante(@PathVariable int dni) {
+    Estudiante e = estudianteService.getEstudianteByDni(dni);
+    estudianteService.updateEstudiante(e);
     return ResponseEntity.ok("Estudiante actualizado con éxito");
 }
+
+
 }

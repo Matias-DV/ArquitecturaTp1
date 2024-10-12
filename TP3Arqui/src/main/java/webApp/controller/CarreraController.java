@@ -9,7 +9,7 @@ import webApp.service.CarreraService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Carrera")
+@RequestMapping("/Carrera")
 public class CarreraController{
 
 @Autowired
