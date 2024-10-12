@@ -1,10 +1,10 @@
-package spackage service;
+package webApp.service;
 
-import dto.EstudianteDTO;
-import entity.Estudiante;
+import webApp.dto.EstudianteDTO;
+import webApp.entity.Estudiante;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.EstudianteRepository;
+import webApp.repository.EstudianteRepository;
 
 import java.util.List;
 
@@ -41,4 +41,6 @@ public class EstudianteService {
     public List<EstudianteDTO> getEstudiantesByGenero(String genero) {
         return estudianteRepository.getEstudiantesByGenero(genero);
     }
+
+
 }

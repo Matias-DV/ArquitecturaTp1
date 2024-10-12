@@ -1,7 +1,11 @@
-package dto;
+package webApp.dto;
 
+import lombok.Getter;
+
+@Getter
 public class CarreraDTO {
-        private String nombreCarrera;
+    // Getters y setters
+    private String nombreCarrera;
         private Long cantidadInscriptos;
 
         public CarreraDTO(String nombreCarrera, Long cantidadInscriptos) {
@@ -9,20 +13,15 @@ public class CarreraDTO {
             this.cantidadInscriptos = cantidadInscriptos;
         }
 
-        // Getters y setters
-        public String getNombreCarrera() {
-            return nombreCarrera;
-        }
-
-        public void setNombreCarrera(String nombreCarrera) {
+        public CarreraDTO(String nombreCarrera){
             this.nombreCarrera = nombreCarrera;
         }
 
-        public Long getCantidadInscriptos() {
-            return cantidadInscriptos;
+    public void setNombreCarrera(String nombreCarrera) {
+            this.nombreCarrera = nombreCarrera;
         }
 
-        public void setCantidadInscriptos(Long cantidadInscriptos) {
+    public void setCantidadInscriptos(Long cantidadInscriptos) {
             this.cantidadInscriptos = cantidadInscriptos;
         }
 

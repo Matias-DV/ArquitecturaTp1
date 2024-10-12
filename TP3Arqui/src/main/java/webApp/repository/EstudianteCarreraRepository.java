@@ -1,12 +1,12 @@
-package repository;
+package webApp.repository;
 
-import dto.CarreraDTO;
-import dto.EstudianteCarreraDTO;
-import dto.EstudianteDTO;
-import dto.RegistroCarrerasDTO;
-import entity.Carrera;
-import entity.Estudiante;
-import entity.EstudianteCarrera;
+import webApp.dto.CarreraDTO;
+import webApp.dto.EstudianteCarreraDTO;
+import webApp.dto.EstudianteDTO;
+import webApp.dto.RegistroCarrerasDTO;
+import webApp.entity.Carrera;
+import webApp.entity.Estudiante;
+import webApp.entity.EstudianteCarrera;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +19,7 @@ public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCar
     @Query("SELECT ec FROM EstudianteCarrera ec WHERE ec.estudiante = :estudiante AND ec.Carrera = :carrera")
     EstudianteCarrera getEstudianteCarrera(@Param("estudiante") Estudiante estudiante, @Param("carrera")Carrera carrera);
 
-    @Query("SELECT new dto.EstudianteCarreraDTO(ec.estudiante, ec.Carrera, ec.antiguedad, ec.esGraduado) FROM EstudianteCarrera ec")
+    @Query("SELECT new webApp.dto.EstudianteCarreraDTO(ec.estudiante, ec.Carrera,ec.antiguedad,ec.esGraduado) FROM EstudianteCarrera ec")
     List<EstudianteCarreraDTO> getEstudiantesCarreras();
 
     @Modifying
@@ -32,10 +32,10 @@ public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCar
     @Query("DELETE FROM EstudianteCarrera ec WHERE ec.estudiante = :estudiante AND ec.Carrera = :carrera")
     void deleteCarrera(@Param("estudiante")Estudiante estudiante, @Param("carrera")Carrera carrera);
 
-    @Query("SELECT new dto.EstudianteCarreraDTO(ec.estudiante, ec.Carrera, ec.antiguedad, ec.esGraduado) FROM EstudianteCarrera ec WHERE ec.Carrera = :carrera AND ec.estudiante.ciudad = :ciudad")
+    @Query("SELECT new webApp.dto.EstudianteCarreraDTO(ec.estudiante, ec.Carrera,ec.antiguedad,ec.esGraduado) FROM EstudianteCarrera ec WHERE ec.Carrera = :carrera AND ec.estudiante.ciudad = :ciudad")
     List<EstudianteDTO>getEstudiantesByCarreraFiltroCiudad(@Param("carrera") Carrera carrera, @Param("ciudad") String ciudad);
 
-    @Query("SELECT new dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c ORDER BY COUNT(ec) DESC")
+    @Query("SELECT new webApp.dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c ORDER BY COUNT(ec) DESC")
     List<CarreraDTO>getCarrerasInscriptosOrdenadas();
 
     @Query("")

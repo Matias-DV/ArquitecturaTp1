@@ -1,4 +1,4 @@
-package entity;
+package webApp.entity;
 import jakarta.persistence.*;
 import java.util.Date;
 

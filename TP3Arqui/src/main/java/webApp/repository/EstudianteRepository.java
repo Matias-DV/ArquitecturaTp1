@@ -1,7 +1,7 @@
-package repository;
+package webApp.repository;
 
-import dto.EstudianteDTO;
-import entity.Estudiante;
+import webApp.dto.EstudianteDTO;
+import webApp.entity.Estudiante;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +14,7 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     @Query("SELECT e FROM Estudiante e WHERE e.dni = :dni")
     public Estudiante getEstudianteByDNI(int dni);
 
-    @Query("SELECT new dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.legajo) FROM Estudiante e WHERE e.apellido = :apellido ORDER BY e.apellido")
+    @Query("SELECT new webApp.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.legajo) FROM Estudiante e WHERE e.apellido = :apellido ORDER BY e.apellido")
     List<EstudianteDTO> getEstudiantesOrdenadosByApellido(@Param("apellido") String apellido);
 
     @Modifying
@@ -24,10 +24,10 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     @Query("DELETE FROM Estudiante e WHERE e.dni = :dni")
     void deleteEstudiante(int dni);
 
-    @Query("SELECT new dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.legajo) FROM Estudiante e WHERE e.legajo = :legajo")
+    @Query("SELECT new webApp.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.legajo) FROM Estudiante e WHERE e.legajo = :legajo")
     EstudianteDTO getEstudianteByLegajo(@Param("legajo") int legajo);
 
-    @Query("SELECT new dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.legajo) FROM Estudiante e WHERE e.genero = :genero")
+    @Query("SELECT new webApp.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.legajo) FROM Estudiante e WHERE e.genero = :genero")
     List<EstudianteDTO>getEstudiantesByGenero(@Param("genero") String genero);
 
 

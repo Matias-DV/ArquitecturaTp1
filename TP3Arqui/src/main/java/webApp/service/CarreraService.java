@@ -1,10 +1,10 @@
-package service;
+package webApp.service;
 
-import dto.CarreraDTO;
-import entity.Carrera;
+import webApp.dto.CarreraDTO;
+import webApp.entity.Carrera;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.CarreraRepository;
+import webApp.repository.CarreraRepository;
 
 import java.util.List;
 

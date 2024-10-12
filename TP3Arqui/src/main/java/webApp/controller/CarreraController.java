@@ -1,4 +1,17 @@
-{
+package webApp.controller;
+
+import webApp.dto.CarreraDTO;
+import webApp.entity.Carrera;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import webApp.service.CarreraService;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/Carrera")
+public class CarreraController{
+
 @Autowired
 private CarreraService carreraService;
 

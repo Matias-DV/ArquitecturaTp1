@@ -1,4 +1,18 @@
-{
+package webApp.controller;
+
+import webApp.dto.EstudianteDTO;
+import webApp.entity.Estudiante;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import webApp.service.EstudianteService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/Estudiante")
+public class EstudianteController{
 
 @Autowired
 private EstudianteService estudianteService;

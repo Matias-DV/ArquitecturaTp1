@@ -1,8 +1,6 @@
-package entity;
+package webApp.entity;
 
 import jakarta.persistence.*;
-
-import java.util.Date;
 
 
 @Entity
@@ -57,7 +55,7 @@ public class EstudianteCarrera {
         this.esGraduado = esGraduado;
     }
 
-    public void setCarrera(entity.Carrera carrera) {
+    public void setCarrera(webApp.entity.Carrera carrera) {
         Carrera = carrera;
     }
 

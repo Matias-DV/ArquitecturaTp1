@@ -1,4 +1,4 @@
-package dto;
+package webApp.dto;
 
 public class RegistroCarrerasDTO {
 

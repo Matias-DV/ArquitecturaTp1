@@ -1,15 +1,14 @@
-package service;
+package webApp.service;
 
-import dto.CarreraDTO;
-import dto.EstudianteCarreraDTO;
-import dto.EstudianteDTO;
-import dto.RegistroCarrerasDTO;
-import entity.Carrera;
-import entity.Estudiante;
-import entity.EstudianteCarrera;
+import webApp.dto.CarreraDTO;
+import webApp.dto.EstudianteCarreraDTO;
+import webApp.dto.EstudianteDTO;
+import webApp.entity.Carrera;
+import webApp.entity.Estudiante;
+import webApp.entity.EstudianteCarrera;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.EstudianteCarreraRepository;
+import webApp.repository.EstudianteCarreraRepository;
 import java.util.List;
 
 @Service
