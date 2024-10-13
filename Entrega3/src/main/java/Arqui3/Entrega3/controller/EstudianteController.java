@@ -12,16 +12,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/estudiantes")
-public class EstudianteController{
+public class EstudianteController {
 
-@Autowired
-private EstudianteService estudianteService;
+    @Autowired
+    private EstudianteService estudianteService;
 
-@PostMapping
-public ResponseEntity<Estudiante> addEstudiante(@RequestBody Estudiante estudiante) {
-    Estudiante nuevoEstudiante = estudianteService.addEstudiante(estudiante);
-    return new ResponseEntity<>(nuevoEstudiante, HttpStatus.CREATED);
-}
+    @PostMapping
+    public ResponseEntity<Estudiante> addEstudiante(@RequestBody Estudiante estudiante) {
+        Estudiante nuevoEstudiante = estudianteService.addEstudiante(estudiante);
+        return new ResponseEntity<>(nuevoEstudiante, HttpStatus.CREATED);
+    }
+
     @GetMapping("/legajo/{legajo}")
     public ResponseEntity<EstudianteDTO> getEstudianteByLegajo(@PathVariable int legajo) {
         EstudianteDTO estudiante = estudianteService.getEstudianteByLegajo(legajo);
@@ -31,23 +32,23 @@ public ResponseEntity<Estudiante> addEstudiante(@RequestBody Estudiante estudian
         return new ResponseEntity<>(estudiante, HttpStatus.OK);
     }
 
-@GetMapping("/genero/{genero}")
-public List<EstudianteDTO> getEstudiantesByGenero(@PathVariable String genero) {
-    return estudianteService.getEstudiantesByGenero(genero);
-}
+    @GetMapping("/genero/{genero}")
+    public List<EstudianteDTO> getEstudiantesByGenero(@PathVariable String genero) {
+        return estudianteService.getEstudiantesByGenero(genero);
+    }
 
-@DeleteMapping("/{dni}")
-public ResponseEntity<String> deleteEstudiante(@PathVariable int dni) {
-    estudianteService.deleteEstudiante(dni);
-    return ResponseEntity.ok("Estudiante eliminado con éxito");
-}
+    @DeleteMapping("/{dni}")
+    public ResponseEntity<String> deleteEstudiante(@PathVariable int dni) {
+        estudianteService.deleteEstudiante(dni);
+        return ResponseEntity.ok("Estudiante eliminado con éxito");
+    }
 
-@PutMapping("/{estudiante}")
-public ResponseEntity<String> updateEstudiante(@PathVariable int dni) {
-    Estudiante e = estudianteService.getEstudianteByDni(dni);
-    estudianteService.updateEstudiante(e);
-    return ResponseEntity.ok("Estudiante actualizado con éxito");
-}
+    @PutMapping("/{estudiante}")
+    public ResponseEntity<String> updateEstudiante(@PathVariable int dni) {
+        Estudiante e = estudianteService.getEstudianteByDni(dni);
+        estudianteService.updateEstudiante(e);
+        return ResponseEntity.ok("Estudiante actualizado con éxito");
+    }
 
 
 }

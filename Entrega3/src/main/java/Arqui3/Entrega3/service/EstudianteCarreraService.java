@@ -17,31 +17,31 @@ public class EstudianteCarreraService {
     @Autowired
     private EstudianteCarreraRepository estudianteCarreraRepository;
 
-    EstudianteCarrera getEstudianteCarrera(Estudiante estudiante, Carrera carrera){
+    public EstudianteCarrera getEstudianteCarrera(Estudiante estudiante, Carrera carrera){
         return estudianteCarreraRepository.getEstudianteCarrera(estudiante, carrera);
     }
 
-    List<EstudianteCarreraDTO> getEstudiantesCarreras(){
+    public List<EstudianteCarreraDTO> getEstudiantesCarreras(){
         return estudianteCarreraRepository.getEstudiantesCarreras();
     }
 
-    EstudianteCarrera addEstudianteCarrera(EstudianteCarrera estudianteCarrera){
+    public EstudianteCarrera addEstudianteCarrera(EstudianteCarrera estudianteCarrera){
         return estudianteCarreraRepository.save(estudianteCarrera);
     }
 
-    void updateCarrera(Estudiante estudiante, Carrera carrera, int antiguedad, boolean esGraduado, int fechaInscripcion, int fechaEgreso, int idEstudiante, Long idCarrera){
+    public void updateCarrera(Estudiante estudiante, Carrera carrera, int antiguedad, boolean esGraduado, int fechaInscripcion, int fechaEgreso, int idEstudiante, Long idCarrera){
         estudianteCarreraRepository.updateEstudianteCarrera(estudiante, carrera, antiguedad, esGraduado, fechaInscripcion, fechaEgreso, idEstudiante, idCarrera);
     }
 
-    void deleteCarrera(Estudiante estudiante, Carrera carrera){
+    public void deleteCarrera(Estudiante estudiante, Carrera carrera){
         estudianteCarreraRepository.deleteCarrera(estudiante, carrera);
     }
 
-    List<EstudianteDTO>getEstudiantesByCarreraFiltroCiudad(Carrera carrera, String ciudad){
-        return estudianteCarreraRepository.getEstudiantesByCarreraFiltroCiudad(carrera, ciudad);
+    public List<EstudianteDTO>getEstudiantesByCarreraFiltroCiudad(long id, String ciudad){
+        return estudianteCarreraRepository.getEstudiantesByCarreraFiltroCiudad(id, ciudad);
     }
 
-    List<CarreraDTO>getCarrerasInscriptosOrdenadas(){
+    public List<CarreraDTO>getCarrerasInscriptosOrdenadas(){
         return estudianteCarreraRepository.getCarrerasInscriptosOrdenadas();
     }
 

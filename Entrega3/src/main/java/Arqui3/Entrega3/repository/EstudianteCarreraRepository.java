@@ -32,10 +32,12 @@ public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCar
     @Query("DELETE FROM EstudianteCarrera ec WHERE ec.estudiante = :estudiante AND ec.Carrera = :carrera")
     void deleteCarrera(@Param("estudiante")Estudiante estudiante, @Param("carrera")Carrera carrera);
 
-    @Query("SELECT new Arqui3.Entrega3.dto.EstudianteCarreraDTO(ec.estudiante, ec.Carrera,ec.antiguedad,ec.esGraduado) FROM EstudianteCarrera ec WHERE ec.Carrera = :carrera AND ec.estudiante.ciudad = :ciudad")
-    List<EstudianteDTO>getEstudiantesByCarreraFiltroCiudad(@Param("carrera") Carrera carrera, @Param("ciudad") String ciudad);
+    @Query("SELECT new Arqui3.Entrega3.dto.EstudianteDTO(ec.estudiante.dni, ec.estudiante.nombre, ec.estudiante.apellido, ec.estudiante.legajo, ec.estudiante.genero ) " +
+            "FROM EstudianteCarrera ec " +
+            "WHERE ec.Carrera.id = :id AND ec.estudiante.ciudad = :ciudad")
+    List<EstudianteDTO> getEstudiantesByCarreraFiltroCiudad(@Param("id") long id, @Param("ciudad") String ciudad);
 
-    @Query("SELECT new Arqui3.Entrega3.dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c ORDER BY COUNT(ec) DESC")
+    @Query("SELECT new Arqui3.Entrega3.dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c GROUP BY (ec.Carrera.Nombre)ORDER BY COUNT(ec) DESC")
     List<CarreraDTO>getCarrerasInscriptosOrdenadas();
 
   /*  @Query("")
