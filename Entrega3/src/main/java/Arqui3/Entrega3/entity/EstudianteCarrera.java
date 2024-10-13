@@ -1,18 +1,25 @@
 package Arqui3.Entrega3.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 
 @Entity
+@Data
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"dni","ID_Carrera"}))
 public class EstudianteCarrera {
     @EmbeddedId
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private EstudianteCarreraId id;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("dni")
     @JoinColumn(name="dni")
     private Estudiante estudiante;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("idCarrera")
     @JoinColumn(name="ID_Carrera")

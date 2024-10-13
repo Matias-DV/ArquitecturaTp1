@@ -3,6 +3,7 @@ package Arqui3.Entrega3.service;
 import Arqui3.Entrega3.dto.CarreraDTO;
 import Arqui3.Entrega3.dto.EstudianteCarreraDTO;
 import Arqui3.Entrega3.dto.EstudianteDTO;
+import Arqui3.Entrega3.dto.RegistroCarrerasDTO;
 import Arqui3.Entrega3.entity.Carrera;
 import Arqui3.Entrega3.entity.Estudiante;
 import Arqui3.Entrega3.entity.EstudianteCarrera;
@@ -43,6 +44,10 @@ public class EstudianteCarreraService {
 
     public List<CarreraDTO>getCarrerasInscriptosOrdenadas(){
         return estudianteCarreraRepository.getCarrerasInscriptosOrdenadas();
+    }
+
+    public RegistroCarrerasDTO getReporteCarreras(){
+        return estudianteCarreraRepository.getReporteCarreras();
     }
 
     //List<RegistroCarrerasDTO>reporteCarreras();

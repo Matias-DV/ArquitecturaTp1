@@ -3,10 +3,12 @@ package Arqui3.Entrega3.controller;
 import Arqui3.Entrega3.dto.CarreraDTO;
 import Arqui3.Entrega3.dto.EstudianteCarreraDTO;
 import Arqui3.Entrega3.dto.EstudianteDTO;
+import Arqui3.Entrega3.dto.RegistroCarrerasDTO;
 import Arqui3.Entrega3.entity.Carrera;
 import Arqui3.Entrega3.entity.Estudiante;
 import Arqui3.Entrega3.entity.EstudianteCarrera;
 import Arqui3.Entrega3.service.EstudianteCarreraService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +49,12 @@ public class EstudianteCarreraController {
     public ResponseEntity<EstudianteCarrera> addEstudianteCarrera(@RequestBody EstudianteCarrera ec) {
         EstudianteCarrera ecAux = estudianteCarreraService.addEstudianteCarrera(ec);
         return ResponseEntity.ok(ecAux);
+    }
+
+    @GetMapping("/reporte")
+    public ResponseEntity<RegistroCarrerasDTO> getReporteCarreras() {
+        RegistroCarrerasDTO rc = estudianteCarreraService.getReporteCarreras();
+        return ResponseEntity.ok(rc);
     }
 
 }
