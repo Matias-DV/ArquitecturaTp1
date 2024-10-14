@@ -7,6 +7,7 @@ import Arqui3.Entrega3.dto.RegistroCarrerasDTO;
 import Arqui3.Entrega3.entity.Carrera;
 import Arqui3.Entrega3.entity.Estudiante;
 import Arqui3.Entrega3.entity.EstudianteCarrera;
+import Arqui3.Entrega3.entity.EstudianteCarreraId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCarrera, Long> {
+public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCarrera, EstudianteCarreraId> {
 
     @Query("SELECT ec FROM EstudianteCarrera ec WHERE ec.estudiante = :estudiante AND ec.Carrera = :carrera")
     EstudianteCarrera getEstudianteCarrera(@Param("estudiante") Estudiante estudiante, @Param("carrera") Carrera carrera);
@@ -40,9 +41,9 @@ public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCar
     @Query("SELECT new Arqui3.Entrega3.dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c GROUP BY (ec.Carrera.Nombre)ORDER BY COUNT(ec) DESC")
     List<CarreraDTO> getCarrerasInscriptosOrdenadas();
 
-    @Query("")
-    RegistroCarrerasDTO getReporteCarreras();
-
   /*  @Query("")
-    List<RegistroCarrerasDTO>reporteCarreras();*/
+    RegistroCarrerasDTO getReporteCarreras();
+*/
+
 }
+

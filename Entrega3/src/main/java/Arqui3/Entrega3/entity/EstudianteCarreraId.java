@@ -25,7 +25,27 @@ public class EstudianteCarreraId implements Serializable {
         return dni;
     }
 
-    public Long getIdCarrera() {
-        return idCarrera;
+    public int getIdCarrera() {
+        if (idCarrera == null) {
+            throw new IllegalArgumentException("El id no puede ser null.");
+        }
+        long longId = idCarrera; // Convierte Long a long
+        if (longId < Integer.MIN_VALUE || longId > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("El valor de id está fuera del rango de un int.");
+        }
+        return (int) longId; // Convierte long a int
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EstudianteCarreraId that = (EstudianteCarreraId) o;
+        return Objects.equals(dni, that.dni) && Objects.equals(idCarrera, that.idCarrera);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dni, idCarrera);
     }
 }

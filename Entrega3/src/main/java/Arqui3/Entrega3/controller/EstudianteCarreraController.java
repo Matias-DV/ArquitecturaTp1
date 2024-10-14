@@ -7,7 +7,12 @@ import Arqui3.Entrega3.dto.RegistroCarrerasDTO;
 import Arqui3.Entrega3.entity.Carrera;
 import Arqui3.Entrega3.entity.Estudiante;
 import Arqui3.Entrega3.entity.EstudianteCarrera;
+import Arqui3.Entrega3.entity.EstudianteCarreraId;
+import Arqui3.Entrega3.repository.CarreraRepository;
+import Arqui3.Entrega3.repository.EstudianteCarreraRepository;
+import Arqui3.Entrega3.repository.EstudianteRepository;
 import Arqui3.Entrega3.service.EstudianteCarreraService;
+import Arqui3.Entrega3.service.EstudianteService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +28,12 @@ import java.util.List;
 public class EstudianteCarreraController {
     @Autowired
     private EstudianteCarreraService estudianteCarreraService;
+    @Autowired
+    private EstudianteRepository estudianteRepository;
+    @Autowired
+    private CarreraRepository carreraRepository;
+    @Autowired
+    private EstudianteCarreraRepository estudianteCarreraRepository;
 
     @GetMapping
     public ResponseEntity<List<EstudianteCarreraDTO>> getEstudiantesCarreras() {
@@ -51,10 +62,33 @@ public class EstudianteCarreraController {
         return ResponseEntity.ok(ecAux);
     }
 
-    @GetMapping("/reporte")
+  /*  @GetMapping("/reporte")
     public ResponseEntity<RegistroCarrerasDTO> getReporteCarreras() {
         RegistroCarrerasDTO rc = estudianteCarreraService.getReporteCarreras();
         return ResponseEntity.ok(rc);
-    }
+    }*/
 
+    @PostMapping
+    public ResponseEntity<EstudianteCarrera> crearEstudianteCarrera(@RequestBody EstudianteCarrera request) {
+        // Buscamos los objetos de Estudiante y Carrera por sus IDs
+        Estudiante estudiante = estudianteRepository.findById(request.getEstudianteCarreraId().getDni())
+                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+
+        Carrera carrera = carreraRepository.findById(request.getEstudianteCarreraId().getIdCarrera())
+                .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+
+
+        // Creamos la entidad intermedia con las instancias correctas
+        EstudianteCarrera estudianteCarrera = new EstudianteCarrera(
+                estudiante,
+                carrera,
+                request.getAntiguedad(),
+                request.getEsGraduado(),
+                request.getFechaInscripcion(),
+                request.getFechaEgreso()
+        );
+
+        EstudianteCarrera nuevaRelacion = estudianteCarreraRepository.save(estudianteCarrera);
+        return ResponseEntity.ok(nuevaRelacion);
+    }
 }

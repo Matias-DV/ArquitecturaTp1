@@ -28,8 +28,15 @@ public class Carrera {
         Nombre = nombre;
     }
 
-    public Long getId() {
-        return id;
+    public int getId() {
+        if (id == null) {
+            throw new IllegalArgumentException("El id no puede ser null.");
+        }
+        long longId = id; // Convierte Long a long
+        if (longId < Integer.MIN_VALUE || longId > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("El valor de id está fuera del rango de un int.");
+        }
+        return (int) longId; // Convierte long a int
     }
 
     @Override

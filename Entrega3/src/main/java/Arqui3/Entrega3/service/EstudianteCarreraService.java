@@ -26,10 +26,6 @@ public class EstudianteCarreraService {
         return estudianteCarreraRepository.getEstudiantesCarreras();
     }
 
-    public EstudianteCarrera addEstudianteCarrera(EstudianteCarrera estudianteCarrera){
-        return estudianteCarreraRepository.save(estudianteCarrera);
-    }
-
     public void updateCarrera(Estudiante estudiante, Carrera carrera, int antiguedad, boolean esGraduado, int fechaInscripcion, int fechaEgreso, int idEstudiante, Long idCarrera){
         estudianteCarreraRepository.updateEstudianteCarrera(estudiante, carrera, antiguedad, esGraduado, fechaInscripcion, fechaEgreso, idEstudiante, idCarrera);
     }
@@ -46,9 +42,8 @@ public class EstudianteCarreraService {
         return estudianteCarreraRepository.getCarrerasInscriptosOrdenadas();
     }
 
-    public RegistroCarrerasDTO getReporteCarreras(){
+   /* public RegistroCarrerasDTO getReporteCarreras(){
         return estudianteCarreraRepository.getReporteCarreras();
-    }
+    }*/
 
-    //List<RegistroCarrerasDTO>reporteCarreras();
 }

@@ -10,19 +10,16 @@ import lombok.Data;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"dni","ID_Carrera"}))
 public class EstudianteCarrera {
     @EmbeddedId
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private EstudianteCarreraId id;
-
     @JsonIgnore
     @ManyToOne
     @MapsId("dni")
-    @JoinColumn(name="dni")
+    @JoinColumn(name="dni", nullable = false)
     private Estudiante estudiante;
-
     @JsonIgnore
     @ManyToOne
     @MapsId("idCarrera")
-    @JoinColumn(name="ID_Carrera")
+    @JoinColumn(name="ID_Carrera", nullable = false)
     private Carrera Carrera;
     @Column
     private int antiguedad;
@@ -33,7 +30,9 @@ public class EstudianteCarrera {
     @Column
     private int fechaEgreso;
 
-    public EstudianteCarrera(int antiguedad, boolean esGraduado, int fechaInscripcion, int fechaEgreso) {
+    public EstudianteCarrera(Estudiante estudiante, Carrera carrera, int antiguedad, boolean esGraduado, int fechaInscripcion, int fechaEgreso) {
+        this.estudiante = estudiante;
+        this.Carrera = carrera;
         this.antiguedad = antiguedad;
         this.esGraduado = esGraduado;
         this.fechaInscripcion = fechaInscripcion;
@@ -43,6 +42,11 @@ public class EstudianteCarrera {
     public EstudianteCarrera() {
 
     }
+
+    public EstudianteCarreraId getEstudianteCarreraId() {
+        return id;
+    }
+
     public int getFechaEgreso() {
         return fechaEgreso;
     }
