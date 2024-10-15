@@ -41,6 +41,24 @@ public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCar
     @Query("SELECT new Arqui3.Entrega3.dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c ON ec.carrera.id = c.id GROUP BY (ec.carrera.Nombre)ORDER BY COUNT(ec) DESC")
     List<CarreraDTO> getCarrerasInscriptosOrdenadas();
 
+    @Query("SELECT new Arqui3.Entrega3.dto.RegistroCarrerasDTO(c.Nombre, ec.fechaEgreso, null, COUNT(e.dni)) " +
+            "FROM EstudianteCarrera ec " +
+            "JOIN ec.carrera c " + // Usa ec.carrera en lugar de ec.carrera.id
+            "JOIN ec.estudiante e " + // Usa ec.estudiante en lugar de e.dni
+            "GROUP BY c.Nombre, ec.fechaEgreso " +
+            "ORDER BY c.Nombre, ec.fechaEgreso")
+    List<RegistroCarrerasDTO> getEgresadosByYear();
+
+    @Query("SELECT new Arqui3.Entrega3.dto.RegistroCarrerasDTO(c.Nombre, ec.fechaInscripcion, COUNT(e.dni), null) " +
+            "FROM EstudianteCarrera ec " +
+            "JOIN ec.carrera c " + // Usa ec.carrera en lugar de ec.carrera.id
+            "JOIN ec.estudiante e " + // Usa ec.estudiante en lugar de e.dni
+            "GROUP BY c.Nombre, ec.fechaInscripcion " +
+            "ORDER BY c.Nombre, ec.fechaInscripcion")
+    List<RegistroCarrerasDTO> getInscriptosByYear();
+
+
+
   /*  @Query("")
     RegistroCarrerasDTO getReporteCarreras();
 */

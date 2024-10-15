@@ -10,6 +10,10 @@ import Arqui3.Entrega3.entity.EstudianteCarrera;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Arqui3.Entrega3.repository.EstudianteCarreraRepository;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -46,6 +50,35 @@ public class EstudianteCarreraService {
         return estudianteCarreraRepository.save(estudianteCarrera);
     }
 
+    public List<RegistroCarrerasDTO> reporteCarreras() {
+        List<RegistroCarrerasDTO> reporteaInscriptos = this.estudianteCarreraRepository.getInscriptosByYear();
+        List<RegistroCarrerasDTO> reporteaEgresados = this.estudianteCarreraRepository.getEgresadosByYear();
+
+        // Crear una lista para el reporte de incriptos
+        List<RegistroCarrerasDTO> reporte = new ArrayList<>(reporteaInscriptos);
+
+        // Usar un iterador para evitar ConcurrentModificationException
+        Iterator<RegistroCarrerasDTO> iterator = reporteaEgresados.iterator();
+        while (iterator.hasNext()) {
+            RegistroCarrerasDTO egresado = iterator.next();
+            for (RegistroCarrerasDTO inscripto : reporteaInscriptos) {
+                if (egresado.getNombreCarrera().equals(inscripto.getNombreCarrera()) &&
+                        egresado.getAnio() == inscripto.getAnio()) {
+                    inscripto.setCantEgresados(egresado.getCantEgresados());
+                    iterator.remove(); // Remover el egresado
+                    break; // Salir del bucle interno
+                }
+            }
+        }
+
+        // Agregar los egresados que no tienen inscriptos correspondientes
+        reporte.addAll(reporteaEgresados);
+        // Ordenar el reporte final
+        reporte.sort(Comparator.comparing(RegistroCarrerasDTO::getNombreCarrera)
+                .thenComparing(RegistroCarrerasDTO::getAnio));
+
+        return reporte;
+    }
 
    /* public RegistroCarrerasDTO getReporteCarreras(){
         return estudianteCarreraRepository.getReporteCarreras();

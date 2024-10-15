@@ -48,19 +48,5 @@ public class CarreraController {
         return ResponseEntity.ok("Carrera eliminada con éxito");
     }
 
-    @GetMapping("/report")
-    public ResponseEntity<?> getEstudianteCarreraReporte() {
-        try {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(carreraService.getEstudianteCarreraReporte());
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-            String errorJson = "{\"message\": \"Error en la consulta\", \"details\"}";
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(errorJson);
-        }
 
-    }
 }

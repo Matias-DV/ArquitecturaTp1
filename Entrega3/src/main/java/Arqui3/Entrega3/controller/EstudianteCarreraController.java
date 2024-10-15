@@ -11,6 +11,8 @@ import Arqui3.Entrega3.repository.EstudianteCarreraRepository;
 import Arqui3.Entrega3.repository.EstudianteRepository;
 import Arqui3.Entrega3.service.EstudianteCarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,5 +78,21 @@ public class EstudianteCarreraController {
              return ResponseEntity.ok(nuevaRelacion);
          }
          throw new RuntimeException("Estudiante carrera ya existe");
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity<?> reporteCarreras() {
+        try {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(estudianteCarreraService.reporteCarreras());
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+            String errorJson = "{\"message\": \"Error en la consulta\", \"details\"}";
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(errorJson);
+        }
+
     }
 }
