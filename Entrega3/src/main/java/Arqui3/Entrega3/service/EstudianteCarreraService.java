@@ -42,6 +42,11 @@ public class EstudianteCarreraService {
         return estudianteCarreraRepository.getCarrerasInscriptosOrdenadas();
     }
 
+    public EstudianteCarrera addEstudianteCarrera(EstudianteCarrera estudianteCarrera){
+        return estudianteCarreraRepository.save(estudianteCarrera);
+    }
+
+
    /* public RegistroCarrerasDTO getReporteCarreras(){
         return estudianteCarreraRepository.getReporteCarreras();
     }*/

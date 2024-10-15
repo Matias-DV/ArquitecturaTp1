@@ -5,35 +5,25 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
-public class EstudianteCarreraId implements Serializable {
-    private int dni; // Suponiendo que el DNI es un entero
-    private Long idCarrera; // Asegúrate de que el tipo corresponda con tu implementación de Carrera
 
-    // Constructor vacío
+public class EstudianteCarreraId implements Serializable {
+    private int estudiante;
+    private int carrera;
+
     public EstudianteCarreraId() {
     }
 
-    // Constructor que acepta ambos campos
-    public EstudianteCarreraId(int dni, Long idCarrera) {
-        this.dni = dni;
-        this.idCarrera = idCarrera;
+    public EstudianteCarreraId(int estudiante, int carrera) {
+        this.estudiante = estudiante;
+        this.carrera = carrera;
     }
 
-    // Getters
-    public int getDni() {
-        return dni;
+    public int getEstudiante() {
+        return estudiante;
     }
 
-    public int getIdCarrera() {
-        if (idCarrera == null) {
-            throw new IllegalArgumentException("El id no puede ser null.");
-        }
-        long longId = idCarrera; // Convierte Long a long
-        if (longId < Integer.MIN_VALUE || longId > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("El valor de id está fuera del rango de un int.");
-        }
-        return (int) longId; // Convierte long a int
+    public int getCarrera() {
+        return carrera;
     }
 
     @Override
@@ -41,11 +31,12 @@ public class EstudianteCarreraId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EstudianteCarreraId that = (EstudianteCarreraId) o;
-        return Objects.equals(dni, that.dni) && Objects.equals(idCarrera, that.idCarrera);
+        return Objects.equals(estudiante, that.estudiante) && Objects.equals(carrera, that.carrera);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dni, idCarrera);
+        return Objects.hash(estudiante, carrera);
     }
+
 }

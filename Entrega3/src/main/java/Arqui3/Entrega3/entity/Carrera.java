@@ -8,7 +8,7 @@ public class Carrera {
     @Id
     @Column(name="ID_Carrera")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column(nullable = false)
     private String Nombre;
 
@@ -29,14 +29,7 @@ public class Carrera {
     }
 
     public int getId() {
-        if (id == null) {
-            throw new IllegalArgumentException("El id no puede ser null.");
-        }
-        long longId = id; // Convierte Long a long
-        if (longId < Integer.MIN_VALUE || longId > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("El valor de id está fuera del rango de un int.");
-        }
-        return (int) longId; // Convierte long a int
+        return id;
     }
 
     @Override

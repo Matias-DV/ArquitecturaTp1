@@ -1,55 +1,42 @@
 package Arqui3.Entrega3.dto;
 
-import jakarta.persistence.*;
-import Arqui3.Entrega3.entity.Carrera;
-import Arqui3.Entrega3.entity.Estudiante;
+import lombok.Getter;
 
 public class EstudianteCarreraDTO {
-        private Estudiante estudiante;
-        private Carrera carrera;
+        @Getter
+        private int dni;
+        @Getter
+        private int idCarrera;
+        @Getter
         private int antiguedad;
         private boolean esGraduado;
+        @Getter
+        private int fechaInscripcion;
+        @Getter
+        private int fechaEgreso;
 
-        public EstudianteCarreraDTO(Estudiante estudiante, Carrera carrera, int antiguedad, boolean esGraduado) {
-            this.estudiante = estudiante;
-            this.carrera = carrera;
+        public EstudianteCarreraDTO(int dni, int idCarrera, int antiguedad, boolean esGraduado, int fechaInscripcion, int fechaEgreso) {
+            this.dni = dni;
+            this.idCarrera = idCarrera;
             this.antiguedad = antiguedad;
             this.esGraduado = esGraduado;
+            this.fechaInscripcion = fechaInscripcion;
+            this.fechaEgreso = fechaEgreso;
         }
 
         public EstudianteCarreraDTO() {
 
         }
 
-        public int getAntiguedad() {
-            return antiguedad;
-        }
-
-        public void setAntiguedad(int antiguedad) {
-            this.antiguedad = antiguedad;
-        }
-
-        public Boolean getEsGraduado() {
+        public boolean getEsGraduado() {
             return esGraduado;
-        }
-
-        public void setEsGraduado(boolean esGraduado) {
-            this.esGraduado = esGraduado;
-        }
-
-        public void setCarrera(Carrera carrera) {
-            this.carrera = carrera;
-        }
-
-        public void setEstudiante(Estudiante estudiante) {
-            this.estudiante = estudiante;
         }
 
         @Override
         public String toString() {
             return "EstudianteCarrera{" +
-                    "estudiante=" + estudiante +
-                    ", idCarrera=" + carrera +
+                    "estudiante=" + dni +
+                    ", idCarrera=" + idCarrera +
                     ", antiguedad=" + antiguedad +
                     ", esGraduado=" + esGraduado +
                     '}';
