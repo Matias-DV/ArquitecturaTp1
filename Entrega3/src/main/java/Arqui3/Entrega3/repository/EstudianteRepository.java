@@ -14,8 +14,8 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     @Query("SELECT e FROM Estudiante e WHERE e.dni = :dni")
     public Estudiante getEstudianteByDNI(int dni);
 
-    @Query("SELECT new Arqui3.Entrega3.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.legajo) FROM Estudiante e WHERE e.apellido = :apellido ORDER BY e.apellido")
-    List<EstudianteDTO> getEstudiantesOrdenadosByApellido(@Param("apellido") String apellido);
+    @Query("SELECT new Arqui3.Entrega3.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.legajo) FROM Estudiante e ORDER BY e.apellido")
+    List<EstudianteDTO> getEstudiantesOrdenadosByApellido();
 
     @Modifying
     @Query("UPDATE Estudiante e SET e.nombre = :nombre, e.apellido = :apellido, e.legajo = :legajo WHERE e.dni = :dni")

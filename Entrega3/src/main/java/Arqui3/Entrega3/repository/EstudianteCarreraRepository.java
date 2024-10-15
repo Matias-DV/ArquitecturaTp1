@@ -38,7 +38,7 @@ public interface EstudianteCarreraRepository extends JpaRepository<EstudianteCar
             "WHERE ec.carrera.id = :id AND ec.estudiante.ciudad = :ciudad")
     List<EstudianteDTO> getEstudiantesByCarreraFiltroCiudad(@Param("id") long id, @Param("ciudad") String ciudad);
 
-    @Query("SELECT new Arqui3.Entrega3.dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c GROUP BY (ec.carrera.Nombre)ORDER BY COUNT(ec) DESC")
+    @Query("SELECT new Arqui3.Entrega3.dto.CarreraDTO(c.Nombre, COUNT(ec)) FROM EstudianteCarrera ec JOIN Carrera c ON ec.carrera.id = c.id GROUP BY (ec.carrera.Nombre)ORDER BY COUNT(ec) DESC")
     List<CarreraDTO> getCarrerasInscriptosOrdenadas();
 
   /*  @Query("")

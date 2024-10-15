@@ -50,5 +50,12 @@ public class EstudianteController {
         return ResponseEntity.ok("Estudiante actualizado con éxito");
     }
 
+    @GetMapping("/ordenadosByApellido")
+    public ResponseEntity<List<EstudianteDTO>> getEstudiantesOrdenadosByApellido() {
+        List<EstudianteDTO> estudiantes = estudianteService.getEstudiantesOrdenadosByApellido();
+        return new ResponseEntity<>(estudiantes, HttpStatus.OK);
+    }
+
+
 
 }

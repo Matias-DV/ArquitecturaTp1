@@ -21,8 +21,8 @@ public class EstudianteService {
 
 
 
-    public List<EstudianteDTO> getEstudiantesOrdenadosByApellido(String apellido){
-        return estudianteRepository.getEstudiantesOrdenadosByApellido(apellido);
+    public List<EstudianteDTO> getEstudiantesOrdenadosByApellido(){
+        return estudianteRepository.getEstudiantesOrdenadosByApellido();
     }
 
     public Estudiante addEstudiante(Estudiante estudiante){
