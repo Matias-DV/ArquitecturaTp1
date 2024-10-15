@@ -9,6 +9,7 @@ public class EstudianteCarreraDTO {
         private int idCarrera;
         @Getter
         private int antiguedad;
+        @Getter
         private boolean esGraduado;
         @Getter
         private int fechaInscripcion;

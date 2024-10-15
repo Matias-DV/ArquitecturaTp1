@@ -3,6 +3,8 @@ package Arqui3.Entrega3.controller;
 import Arqui3.Entrega3.dto.CarreraDTO;
 import Arqui3.Entrega3.entity.Carrera;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import Arqui3.Entrega3.service.CarreraService;
@@ -44,5 +46,21 @@ public class CarreraController {
     public ResponseEntity<String> deleteCarrera(@PathVariable Long id) {
         carreraService.deleteCarrera(id);
         return ResponseEntity.ok("Carrera eliminada con éxito");
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity<?> getEstudianteCarreraReporte() {
+        try {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(carreraService.getEstudianteCarreraReporte());
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+            String errorJson = "{\"message\": \"Error en la consulta\", \"details\"}";
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(errorJson);
+        }
+
     }
 }

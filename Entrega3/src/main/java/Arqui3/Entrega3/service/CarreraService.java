@@ -1,6 +1,7 @@
 package Arqui3.Entrega3.service;
 
 import Arqui3.Entrega3.dto.CarreraDTO;
+import Arqui3.Entrega3.dto.ReporteDTO;
 import Arqui3.Entrega3.entity.Carrera;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,10 @@ public class CarreraService {
 
     public void deleteCarrera(Long carrera) {
         carreraRepository.deleteCarrera(carrera);
+    }
+
+    public List<ReporteDTO>getEstudianteCarreraReporte(){
+        List<ReporteDTO> reportList = carreraRepository.getEstudianteCarreraReporte();
+        return reportList;
     }
 }
