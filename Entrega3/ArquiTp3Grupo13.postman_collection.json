@@ -61,7 +61,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/estudiantes/legajo/223311",
+					"raw": "http://localhost:8080/api/estudiantes/legajo/777",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -71,7 +71,7 @@
 						"api",
 						"estudiantes",
 						"legajo",
-						"223311"
+						"777"
 					]
 				}
 			},
@@ -84,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"dni\": 4491019,\r\n  \"nombre\": \"Manuela\",\r\n  \"apellido\": \"Chavez\",\r\n  \"edad\": 22,\r\n  \"genero\": \"Femenino\",\r\n  \"ciudad\": \"Diltan\",\r\n  \"legajo\": 8888\r\n}\r\n",
+					"raw": "{\r\n  \"dni\": 1,\r\n  \"nombre\": \"Pedro\",\r\n  \"apellido\": \"Picapiedras\",\r\n  \"edad\": 22,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudad\": \"Tandil\",\r\n  \"legajo\": 777\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -188,7 +188,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/estudianteCarreras/estudianteByCarreraYCiudad?Carrera=1&Ciudad=Diltan",
+					"raw": "http://localhost:8080/api/estudianteCarreras/estudianteByCarreraYCiudad?Carrera=1&Ciudad=Tandil",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -206,7 +206,7 @@
 						},
 						{
 							"key": "Ciudad",
-							"value": "Diltan"
+							"value": "Tandil"
 						}
 					]
 				}
@@ -220,7 +220,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"idEstudiante\": 0,\r\n  \"idCarrera\": 1\r\n}\r\n",
+					"raw": "{\r\n  \"dni\": 1,\r\n  \"idCarrera\": 1,\r\n  \"antiguedad\": 20,\r\n  \"esGraduado\": true,\r\n  \"fechaInscripcion\": 2017,\r\n  \"fechaEgreso\": 2020\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
