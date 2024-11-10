@@ -6,48 +6,47 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class Monopatin {
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Monopatin{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_monopatin;
     @Column
-    private boolean estaActivado;
-
+    private String ubicacionActual;
     @Column
-    private String ubicacion;
-
+    private Boolean estaActivo;
     @Column
-    private int kmRecorridos;
-
+    private Boolean habilitado;
     @Column
-    private int tiempoUso;
-
+    private Double kilometrosTotales;
     @Column
-    private boolean habilitado;
+    private Integer tiempo_uso_total;
 
     public Monopatin() {
     }
 
-    public Monopatin(int id, boolean estaActivado, String ubicacion, int kmRecorridos, int tiempoUso, boolean habilitado) {
-        this.id = id;
+    public Monopatin(int id_monopatin, String ubicacionActual, Boolean estaActivado, Boolean habilitado, Double kilometrosTotales, int tiempo_uso_total) {
+        this.id_monopatin = id_monopatin;
+        this.ubicacionActual = ubicacionActual;
         this.estaActivado = estaActivado;
-        this.ubicacion = ubicacion;
-        this.kmRecorridos = kmRecorridos;
-        this.tiempoUso = tiempoUso;
         this.habilitado = habilitado;
+        this.kilometrosTotales = kilometrosTotales;
+        this.tiempo_uso_total = tiempo_uso_total;
     }
 
     @Override
     public String toString() {
         return "Monopatin{" +
-                "id=" + id +
+                "id_monopatin=" + id_monopatin +
+                ", ubicacionActual='" + ubicacionActual + '\'' +
                 ", estaActivado=" + estaActivado +
-                ", ubicacion='" + ubicacion + '\'' +
-                ", kmRecorridos=" + kmRecorridos +
-                ", tiempoUso=" + tiempoUso +
                 ", habilitado=" + habilitado +
+                ", kilometrosRecorridos=" + kilometrosRecorridos +
+                ", tiempo_uso_total=" + tiempo_uso_total +
                 '}';
     }
+
+    
 }
