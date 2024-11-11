@@ -1,4 +1,4 @@
-package repository;
+package micromonopatin.repository;
 
 import dto.PausaDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
