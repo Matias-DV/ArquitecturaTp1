@@ -1,4 +1,4 @@
-package org.example.microserviciomantenimiento;
+package micromantenimiento;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

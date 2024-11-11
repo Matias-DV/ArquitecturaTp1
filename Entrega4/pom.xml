@@ -11,6 +11,7 @@
     <groupId>org.entrega4</groupId>
     <artifactId>Entrega4</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>Entrega4</name>
     <description>Entrega4</description>
     <url/>
