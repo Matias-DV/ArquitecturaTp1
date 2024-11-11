@@ -10,9 +10,8 @@ public class Administrador {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column
     private int precioTarifa;
-    @Column
+
     private int getPrecioTarifaExtra;
 
     public Administrador() {
