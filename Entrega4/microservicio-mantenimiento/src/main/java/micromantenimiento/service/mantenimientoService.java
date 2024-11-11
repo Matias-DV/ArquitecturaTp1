@@ -2,8 +2,11 @@ package micromantenimiento.service;
 import micromantenimiento.dto.MantenimientoDTO;
 import micromantenimiento.entity.Mantenimiento;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import micromantenimiento.repository.mantenimientoRepository;
+
+import java.util.List;
 
 @Service
 public class mantenimientoService {
@@ -25,5 +28,9 @@ public class mantenimientoService {
 
     public MantenimientoDTO getMantenimientoById(int idMantenimiento){
         return mantenimientoRepository.getMantenimientoById(idMantenimiento);
+    }
+
+    public List<MantenimientoDTO> getMantenimientos() {
+        return mantenimientoRepository.getMantenimientos();
     }
 }

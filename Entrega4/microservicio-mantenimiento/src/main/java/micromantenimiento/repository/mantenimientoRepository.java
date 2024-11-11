@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.Date;
+import java.util.List;
 
 public interface mantenimientoRepository extends JpaRepository<Mantenimiento, Integer> {
 
@@ -19,4 +20,6 @@ public interface mantenimientoRepository extends JpaRepository<Mantenimiento, In
     @Query("SELECT new micromantenimiento.dto.MantenimientoDTO(m.id,m.idMonopatin,m.fechaInicio,m.fechaFin) FROM Mantenimiento m WHERE m.id = :id")
     public MantenimientoDTO getMantenimientoById(@Param("id") int id);
 
+    @Query("SELECT new micromantenimiento.dto.MantenimientoDTO(m.id,m.idMonopatin,m.fechaInicio,m.fechaFin) FROM Mantenimiento m")
+    List<MantenimientoDTO> getMantenimientos();
 }

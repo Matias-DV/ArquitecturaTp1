@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import micromantenimiento.service.mantenimientoService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/mantenimiento")
 public class mantenimientoController {
@@ -65,6 +67,12 @@ public class mantenimientoController {
         catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MantenimientoDTO>> getMantenimientos(){
+        List<MantenimientoDTO> mantenimientos = mantenimientoService.getMantenimientos();
+        return ResponseEntity.ok(mantenimientos);
     }
 
 }

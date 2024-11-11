@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 public class Mantenimiento {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private int id;
     @Getter
@@ -31,4 +31,5 @@ public class Mantenimiento {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
+
 }
