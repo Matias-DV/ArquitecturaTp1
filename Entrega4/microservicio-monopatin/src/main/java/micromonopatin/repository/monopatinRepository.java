@@ -8,10 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface monopatinRepository  extends JpaRepository<Monopatin,Integer> {
 
-    @Query("SELECT new micromonopatin.dto.MonopatinDTO(m.id_monopatin, m.ubicacionActual, m.estaActivo, m.habilitado, m.kilometrosTotales, m.tiempo_uso_total) FROM Monopatin m WHERE m.id = :id")
+    @Query("SELECT new micromonopatin.dto.MonopatinDTO(m.id_monopatin, m.ubicacionActual, m.estaActivo, m.habilitado, m.kilometrosTotales, m.tiempo_uso_total) FROM Monopatin m WHERE m.id_monopatin = :id")
     MonopatinDTO getMonopatinById(@Param("id") int id);
 
     @Query("SELECT new micromonopatin.dto.MonopatinDTO(m.id_monopatin, m.ubicacionActual, m.estaActivo, m.habilitado, m.kilometrosTotales, m.tiempo_uso_total) FROM Monopatin m WHERE m.id_monopatin = :id_monopatin")
@@ -23,4 +25,7 @@ public interface monopatinRepository  extends JpaRepository<Monopatin,Integer> {
 
     @Query("DELETE FROM Monopatin m WHERE m.id_monopatin = :id_monopatin")
     void deleteMonopatin(@Param("id_monopatin") int id_monopatin);
+
+    @Query("SELECT new micromonopatin.dto.MonopatinDTO(m.id_monopatin, m.ubicacionActual, m.estaActivo, m.habilitado, m.kilometrosTotales, m.tiempo_uso_total) FROM Monopatin m")
+    List<MonopatinDTO> getMonopatines();
 }

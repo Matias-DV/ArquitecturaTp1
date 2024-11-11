@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/monopatines")
 public class monopatinController{
@@ -17,6 +19,11 @@ public class monopatinController{
     @PostMapping
     public ResponseEntity<Monopatin> addMonopatin(@RequestBody Monopatin monopatin) {
         return ResponseEntity.ok(ms.addMonopatin(monopatin));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MonopatinDTO>> getMonopatines() {
+        return ResponseEntity.ok(ms.getMonopatines());
     }
 
     @GetMapping("/{id_monopatin}")

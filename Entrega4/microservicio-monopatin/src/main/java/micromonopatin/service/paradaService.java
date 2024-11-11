@@ -6,6 +6,8 @@ import micromonopatin.repository.paradaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class paradaService{
     @Autowired
@@ -13,6 +15,10 @@ public class paradaService{
 
     public ParadaDTO getParada(int id_parada) {
         return pr.getParada(id_parada);
+    }
+
+    public List<ParadaDTO> getParadas() {
+        return pr.getParadas();
     }
 
     public Parada addParada(Parada parada){

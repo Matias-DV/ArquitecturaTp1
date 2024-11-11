@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface paradaRepository extends JpaRepository<Parada,Integer> {
     @Query("SELECT new micromonopatin.dto.ParadaDTO(p.id_parada,p.ubicacion,p.permitida) FROM Parada p WHERE p.id_parada = :id_parada")
@@ -20,4 +22,6 @@ public interface paradaRepository extends JpaRepository<Parada,Integer> {
     @Query("DELETE FROM Parada p WHERE p.id_parada = :id_parada")
     void deleteParada(@Param("id_parada") int id_parada);
 
+    @Query("SELECT new micromonopatin.dto.ParadaDTO(p.id_parada,p.ubicacion,p.permitida) FROM Parada p")
+    List<ParadaDTO> getParadas();
 }

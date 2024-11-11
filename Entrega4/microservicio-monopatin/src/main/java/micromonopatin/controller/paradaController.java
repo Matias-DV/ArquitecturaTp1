@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/paradas")
 public class paradaController{
@@ -23,6 +25,11 @@ public class paradaController{
     @GetMapping("/{id_parada}")
     public ResponseEntity<ParadaDTO> getParada(@PathVariable int id_parada) {
         return ResponseEntity.ok(ps.getParada(id_parada));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ParadaDTO>> getParadas() {
+        return ResponseEntity.ok(ps.getParadas());
     }
 
     @PutMapping("/id/{id_parada}")
