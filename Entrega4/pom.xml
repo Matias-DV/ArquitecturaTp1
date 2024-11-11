@@ -23,6 +23,7 @@
         <module>microservicio-parada</module>
         <module>microservicio-reporte</module>
         <module>microservicio-usuarioCuenta</module>
+        <module>microservicio-mantenimiento</module>
         <module>microservicio-viaje</module>
     </modules>
     <developers>

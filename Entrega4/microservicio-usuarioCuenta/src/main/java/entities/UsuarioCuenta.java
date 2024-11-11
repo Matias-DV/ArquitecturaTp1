@@ -18,4 +18,13 @@ public class UsuarioCuenta {
     @ManyToOne
     @JoinColumn(name ="idCuenta", nullable = false)
     private Cuenta cuenta;
+
+    public UsuarioCuenta(Usuario usuario, Cuenta cuenta) {
+        this.usuario = usuario;
+        this.cuenta = cuenta;
+    }
+
+    public UsuarioCuenta() {
+
+    }
 }
