@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ViajeRepository extends JpaRepository<ViajeDTO, Integer> {
+public interface ViajeRepository extends JpaRepository<ViajeDTO, Long> {
 
-
+    ViajeDTO getByIdViaje(Integer idViaje);
 }

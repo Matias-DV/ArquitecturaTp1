@@ -1,9 +1,6 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,15 +9,15 @@ public class Pausa {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idPausa;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long idPausa;
 
-    private int idViaje;
-
+    @Column
+    private long idViaje;
 
     public Pausa() {}
 
-    public Pausa(int idPausa, int idViaje) {
+    public Pausa(long idViaje) {
         this.idPausa = idPausa;
         this.idViaje = idViaje;
     }

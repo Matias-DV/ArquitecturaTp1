@@ -8,11 +8,13 @@
         <version>3.3.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>org.entrega4</groupId>
     <artifactId>Entrega4</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Entrega4</name>
     <description>Entrega4</description>
+
     <url/>
     <licenses>
         <license/>
@@ -26,9 +28,22 @@
         <tag/>
         <url/>
     </scm>
+
+    <modules>
+        <module>microservicio-administrador</module>
+        <module>microservicio-cuenta</module>
+        <module>microservicio-monopatin</module>
+        <module>microservicio-parada</module>
+        <module>microservicio-reporte</module>
+        <module>microservicio-usuario</module>
+        <module>microservicio-usuarioCuenta</module>
+        <module>microservicio-viaje</module>
+    </modules>
+
     <properties>
         <java.version>17</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
