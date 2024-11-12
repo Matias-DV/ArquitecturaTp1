@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Monopatin{
+public class  Monopatin{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_monopatin;

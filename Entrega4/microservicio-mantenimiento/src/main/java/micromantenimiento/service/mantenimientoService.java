@@ -1,18 +1,19 @@
 package micromantenimiento.service;
 import micromantenimiento.dto.MantenimientoDTO;
 import micromantenimiento.entity.Mantenimiento;
+import micromantenimiento.repository.MantenimientoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import micromantenimiento.repository.mantenimientoRepository;
+import micromantenimiento.repository.MantenimientoRepository;
 
 import java.util.List;
 
 @Service
-public class mantenimientoService {
+public class MantenimientoService {
 
     @Autowired
-    private mantenimientoRepository mantenimientoRepository;
+    private MantenimientoRepository mantenimientoRepository;
 
     public Mantenimiento addMantenimiento(Mantenimiento m){
         return mantenimientoRepository.save(m);

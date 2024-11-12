@@ -4,15 +4,11 @@ package controller;
 import dto.ViajeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.*;
-import service.ViajeService;
-=======
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import micromonopatin.service.ViajeService;
->>>>>>> 73f475bc31246c5b0a3ef36625ea714398f0665c
+import microviaje.service.ViajeService;
 
 import java.util.List;
 

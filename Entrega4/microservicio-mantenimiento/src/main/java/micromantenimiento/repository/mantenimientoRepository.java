@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Date;
 import java.util.List;
 
-public interface mantenimientoRepository extends JpaRepository<Mantenimiento, Integer> {
+public interface MantenimientoRepository extends JpaRepository<Mantenimiento, Integer> {
 
     @Query("DELETE FROM Mantenimiento m WHERE m.id = :id")
     void deleteMantenimiento(@Param("id") int id);

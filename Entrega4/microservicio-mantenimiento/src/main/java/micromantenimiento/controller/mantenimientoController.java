@@ -2,20 +2,20 @@ package micromantenimiento.controller;
 
 import micromantenimiento.dto.MantenimientoDTO;
 import micromantenimiento.entity.Mantenimiento;
+import micromantenimiento.service.MantenimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import micromantenimiento.service.mantenimientoService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/mantenimiento")
-public class mantenimientoController {
+@RequestMapping("api/mantenimientos")
+public class MantenimientoController {
 
     @Autowired
-    private mantenimientoService mantenimientoService;
+    private MantenimientoService mantenimientoService;
 
     @PostMapping
     public ResponseEntity<Mantenimiento> addCuenta(@RequestBody Mantenimiento mantenimiento) {
