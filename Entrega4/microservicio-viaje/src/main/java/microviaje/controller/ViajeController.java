@@ -2,6 +2,7 @@ package microviaje.controller;
 
 
 import microviaje.dto.ViajeDTO;
+import microviaje.entity.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ public class ViajeController {
 
     // Crear o actualizar un viaje
     @PostMapping
-    public ResponseEntity<ViajeDTO> saveViaje(@RequestBody ViajeDTO viaje) {
-        ViajeDTO savedViaje = viajeService.saveViaje(viaje);
+    public ResponseEntity<Viaje> saveViaje(@RequestBody Viaje viaje) {
+        Viaje savedViaje = viajeService.saveViaje(viaje);
         return ResponseEntity.ok(savedViaje);
     }
 
@@ -36,15 +37,17 @@ public class ViajeController {
     // Obtener un viaje por ID
     @GetMapping("/{id}")
     public ResponseEntity<ViajeDTO> getViajeById(@PathVariable Long id) {
-        return viajeService.getViajeById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        ViajeDTO viajeDTO = viajeService.getViajeById(id);
+        if (viajeDTO != null) {
+            return ResponseEntity.ok(viajeDTO);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     // Eliminar un viaje por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteViaje(@PathVariable Long id) {
-        if (viajeService.getViajeById(id).isPresent()) {
+        if (viajeService.getViajeById(id)!=null) {
             viajeService.deleteViaje(id);
             return ResponseEntity.noContent().build();
         } else {

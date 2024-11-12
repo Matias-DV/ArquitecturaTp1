@@ -1,5 +1,5 @@
 spring:
   application:
-    name: microservicio-usuarioCuentaaplication.yml
+    name: microservicio-usuarioCuenta
   config:
     import: optional:configserver:http://localhost:8081

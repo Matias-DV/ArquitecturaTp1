@@ -1,10 +1,12 @@
 package microviaje.service;
 
 import microviaje.dto.ViajeDTO;
+import microviaje.entity.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import microviaje.repository.ViajeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,16 +16,16 @@ public class ViajeService {
     @Autowired
     private ViajeRepository viajeRepository;
 
-    public ViajeDTO saveViaje(ViajeDTO viaje) {
+    public Viaje saveViaje(Viaje viaje) {
         return viajeRepository.save(viaje);
     }
 
-    public Optional<ViajeDTO> getViajeById(Long idViaje) {
-        return viajeRepository.findById(idViaje);
+    public ViajeDTO getViajeById(Long idViaje) {
+        return viajeRepository.getViajeById(idViaje);
     }
 
     public List<ViajeDTO> getAllViajes() {
-        return viajeRepository.findAll();
+        return viajeRepository.getViajes();
     }
 
     public void deleteViaje(Long idViaje) {
