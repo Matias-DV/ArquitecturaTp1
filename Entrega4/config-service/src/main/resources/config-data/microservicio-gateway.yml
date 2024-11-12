@@ -1,0 +1,37 @@
+server:
+  port: 8083
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: microservicio-mantenimiento
+            uri: lb://microservicio-mantenimiento
+            predicates:
+              - Path=/api/mantenimientos/**
+          - id: microservicio-monopatin
+            uri: lb://microservicio-monopatin
+            predicates:
+              - Path=/api/monopatines/**
+          - id: microservicio-usuarioCuenta
+            uri: lb://microservicio-usuarioCuenta
+            predicates:
+              - Path=/api/usuariosCuentas/**
+          - id: microservicio-viaje
+            uri: lb://microservicio-viaje
+            predicates:
+              - Path=/api/viajes/**
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+

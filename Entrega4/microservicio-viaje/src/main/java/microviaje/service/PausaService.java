@@ -1,9 +1,9 @@
 package microviaje.service;
 
-import dto.PausaDTO;
+import microviaje.dto.PausaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.PausaRepository;
+import microviaje.repository.PausaRepository;
 
 import java.util.List;
 

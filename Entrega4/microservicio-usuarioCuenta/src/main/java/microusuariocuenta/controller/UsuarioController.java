@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/usuarios")
+@RequestMapping("api/usuariosCuentas/usuarios")
 public class UsuarioController {
 
     @Autowired

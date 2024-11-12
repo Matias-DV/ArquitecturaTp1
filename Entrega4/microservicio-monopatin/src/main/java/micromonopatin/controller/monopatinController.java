@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/monopatines")
+@RequestMapping("api/monopatines/monopatines")
 public class monopatinController{
     @Autowired
     private monopatinService ms;
@@ -26,7 +26,7 @@ public class monopatinController{
         return ResponseEntity.ok(ms.getMonopatines());
     }
 
-    @GetMapping("/{id_monopatin}")
+    @GetMapping("/id/{id_monopatin}")
     public ResponseEntity<MonopatinDTO> getMonopatin(@PathVariable int id_monopatin) {
         return ResponseEntity.ok(ms.getMonopatin(id_monopatin));
     }

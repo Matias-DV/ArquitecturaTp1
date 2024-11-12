@@ -1,9 +1,9 @@
 package microviaje.service;
 
-import dto.ViajeDTO;
+import microviaje.dto.ViajeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.ViajeRepository;
+import microviaje.repository.ViajeRepository;
 
 import java.util.List;
 import java.util.Optional;

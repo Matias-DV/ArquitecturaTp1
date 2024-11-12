@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.3.5</version>
-        <relativePath/> <!-- lookup parent from micromonopatin.repository -->
+        <relativePath/>
     </parent>
 
     <groupId>org.entrega4</groupId>
@@ -35,10 +35,15 @@
         <module>microservicio-monopatin</module>
         <module>microservicio-usuarioCuenta</module>
         <module>microservicio-viaje</module>
+        <module>microservicio-eureka</module>
+        <module>microservicio-gateway</module>
+        <module>microservicio-mantenimiento</module>
+        <module>config-service</module>
     </modules>
 
     <properties>
         <java.version>17</java.version>
+        <spring-cloud.version>2023.0.3</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -53,7 +58,17 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <plugins>
             <plugin>

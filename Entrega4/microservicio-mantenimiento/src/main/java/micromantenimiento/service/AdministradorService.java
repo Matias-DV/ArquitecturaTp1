@@ -43,4 +43,11 @@ public class AdministradorService {
         }
     }
 
+    public AdministradorDTO getAdministradorById(int id) {
+        return administradorRepository.getAdministradorById(id);
+    }
+
+    public List<AdministradorDTO> getAdministradores() {
+        return administradorRepository.getAdministradores();
+    }
 }
