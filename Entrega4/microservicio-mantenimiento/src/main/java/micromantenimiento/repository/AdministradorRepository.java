@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
+import java.util.List;
 
 public interface AdministradorRepository extends JpaRepository<Administrador, Integer> {
 
@@ -19,6 +20,9 @@ public interface AdministradorRepository extends JpaRepository<Administrador, In
     public void updateAdministrador(@Param("precioTarifa") double precioTarifa, @Param("precioTarifaExtra") double precioTarifaExtra);
 
     @Query("SELECT new micromantenimiento.dto.AdministradorDTO(a.id, a.precioTarifa, a.precioTarifaExtra) FROM Administrador a WHERE a.id = :id")
-    public AdministradorDTO getAdministradorById(@Param("id") int id, @Param("precioTarifa") double precioTarifa, @Param("precioTarifaExtra") double precioTarifaExtra);
+    public AdministradorDTO getAdministradorById(@Param("id") int id);
+
+    @Query("SELECT new micromantenimiento.dto.AdministradorDTO(a.id,a.precioTarifa,a.precioTarifaExtra) FROM Administrador a")
+    List<AdministradorDTO> getAdministradores();
 
 }

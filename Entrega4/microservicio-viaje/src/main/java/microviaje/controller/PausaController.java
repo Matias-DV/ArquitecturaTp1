@@ -12,7 +12,7 @@ import microviaje.service.PausaService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/viajes/pausas")
+@RequestMapping("/api/pausas")
 public class PausaController {
 
     @Autowired

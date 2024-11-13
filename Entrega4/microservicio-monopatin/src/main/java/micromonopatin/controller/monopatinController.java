@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/monopatines/monopatines")
+@RequestMapping("api/monopatines")
 public class monopatinController{
     @Autowired
     private monopatinService ms;

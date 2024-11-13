@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/monopatines/paradas")
+@RequestMapping("api/paradas")
 public class paradaController{
     @Autowired
     private paradaService ps;

@@ -14,7 +14,7 @@ import microviaje.service.ViajeService;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/viajes/viajes")
+@RequestMapping("api/viajes")
 public class ViajeController {
 
     @Autowired

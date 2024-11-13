@@ -18,19 +18,19 @@ spring:
           - id: microservicio-mantenimiento
             uri: lb://microservicio-mantenimiento
             predicates:
-              - Path=/api/mantenimientos/**
+              - Path=/api/mantenimientos/**, /api/administradores/**, /api/reportes/**
           - id: microservicio-monopatin
             uri: lb://microservicio-monopatin
             predicates:
-              - Path=/api/monopatines/**
+              - Path=/api/monopatines/**, /api/paradas/**
           - id: microservicio-usuarioCuenta
             uri: lb://microservicio-usuarioCuenta
             predicates:
-              - Path=/api/usuariosCuentas/**
+              - Path=/api/usuarios/**, /api/cuentas/**
           - id: microservicio-viaje
             uri: lb://microservicio-viaje
             predicates:
-              - Path=/api/viajes/**
+              - Path=/api/viajes/**, /api/pausas/**
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
