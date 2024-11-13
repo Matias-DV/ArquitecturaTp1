@@ -1,12 +1,17 @@
 package microusuariocuenta.services;
 
+import jakarta.transaction.Transactional;
 import microusuariocuenta.dto.CuentaDTO;
 import microusuariocuenta.entity.Cuenta;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import microusuariocuenta.repositories.CuentaRepository;
 
+import java.util.List;
+
 @Service
+@Transactional
 public class CuentaService {
 
     @Autowired
@@ -26,5 +31,9 @@ public class CuentaService {
 
     public CuentaDTO getCuentaById(int idCuenta){
         return cuentaRepository.getCuentaById(idCuenta);
+    }
+
+    public List<CuentaDTO> getCuentas() {
+        return cuentaRepository.getCuentas();
     }
 }

@@ -18,9 +18,13 @@ public class  Monopatin{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_monopatin;
-    private String ubicacionActual;
+    @NonNull
     private Boolean estaActivo;
+    @NonNull
     private Boolean habilitado;
+    @NonNull
     private Double kilometrosTotales;
     private int tiempo_uso_total;
+    private int ubicacionX;
+    private int ubicacionY;
 }

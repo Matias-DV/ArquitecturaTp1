@@ -16,9 +16,9 @@ public interface ClientMonopatin {
     List<Monopatin> getMonopatines();
 
     @Modifying
-    @PutMapping("api/monopatines/monopatines/id/{id_monopatin}/habilitado/{valor}")
+    @PutMapping("api/monopatines/id/{id_monopatin}/habilitado/{valor}")
     void updateMonopatinHabilitado(@PathVariable int id_monopatin, @PathVariable boolean valor);
 
-    @GetMapping("api/monopatines/monopatines/id/{id_monopatin}")
+    @GetMapping("api/monopatines/id/{id_monopatin}")
     Monopatin getMonopatin(@PathVariable("id_monopatin") int id_monopatin);
 }

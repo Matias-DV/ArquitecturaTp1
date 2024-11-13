@@ -1,9 +1,6 @@
 package micromonopatin.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +15,7 @@ public class Parada{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_parada;
-    private String ubicacion;
     private Boolean permitida;
+    private int ubicacionX;
+    private int ubicacionY;
 }

@@ -1,5 +1,6 @@
 package micromonopatin.service;
 
+import jakarta.transaction.Transactional;
 import micromonopatin.dto.ParadaDTO;
 import micromonopatin.entity.Parada;
 import micromonopatin.repository.paradaRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class paradaService{
     @Autowired
     private paradaRepository pr;
@@ -26,7 +28,7 @@ public class paradaService{
     }
 
     public void updateParada(Parada parada) {
-        pr.updateParada(parada.getUbicacion(), parada.getPermitida(),parada.getId_parada());
+        pr.updateParada(parada.getUbicacionX(), parada.getUbicacionY(), parada.getPermitida(),parada.getId_parada());
     }
 
     public void deleteParada(int id_parada) {

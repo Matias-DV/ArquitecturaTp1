@@ -22,7 +22,7 @@ public class paradaController{
         return ResponseEntity.ok(ps.addParada(parada));
     }
 
-    @GetMapping("/{id_parada}")
+    @GetMapping("/id/{id_parada}")
     public ResponseEntity<ParadaDTO> getParada(@PathVariable int id_parada) {
         return ResponseEntity.ok(ps.getParada(id_parada));
     }
@@ -46,7 +46,7 @@ public class paradaController{
         }
     }
 
-    @DeleteMapping("/id/{id}")
+    @DeleteMapping("/id/{idParada}")
     public ResponseEntity<String> deleteParada(@PathVariable int idParada){
         try {
             if (ps.getParada(idParada) != null) {

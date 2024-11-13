@@ -57,7 +57,7 @@ public class monopatinController{
         }
     }
 
-    @DeleteMapping("/id/{id}")
+    @DeleteMapping("/id/{idMonopatin}")
     public ResponseEntity<String> deleteMonopatin(@PathVariable int idMonopatin){
         try {
             if (ms.getMonopatin(idMonopatin) != null) {
@@ -69,6 +69,11 @@ public class monopatinController{
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar el monopatin.");
         }
+    }
+
+    @GetMapping("/reporte/kilometros")
+    public ResponseEntity<List<MonopatinDTO>> getMonopatinesReporteKilometros() {
+        return ResponseEntity.ok(ms.getReporteMonopatinesPorKilometro());
     }
 
 }

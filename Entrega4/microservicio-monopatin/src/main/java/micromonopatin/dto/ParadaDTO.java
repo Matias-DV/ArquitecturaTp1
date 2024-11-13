@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 public class ParadaDTO{
     private int id_parada;
-    private String ubicacion;
     private Boolean permitida;
+    private int ubicacionX;
+    private int ubicacionY;
 }

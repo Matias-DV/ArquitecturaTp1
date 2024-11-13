@@ -18,7 +18,7 @@ spring:
           - id: microservicio-mantenimiento
             uri: lb://microservicio-mantenimiento
             predicates:
-              - Path=/api/mantenimientos/**, /api/administradores/**, /api/reportes/**
+              - Path=/api/mantenimientos/**, /api/tarifas/**, /api/reportes/**
           - id: microservicio-monopatin
             uri: lb://microservicio-monopatin
             predicates:

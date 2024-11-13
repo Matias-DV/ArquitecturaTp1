@@ -2,13 +2,13 @@ package micromantenimiento.controller;
 
 import micromantenimiento.dto.MantenimientoDTO;
 import micromantenimiento.entity.Mantenimiento;
-import micromantenimiento.feignClients.ClientMonopatin;
 import micromantenimiento.service.MantenimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -18,18 +18,26 @@ public class MantenimientoController {
     @Autowired
     private MantenimientoService mantenimientoService;
 
-    @Autowired
-    private ClientMonopatin clientMonopatin;
+
+    @PutMapping("/id/{id}/finalizar")
+    public ResponseEntity<String> finalizarMantenimiento(@PathVariable int id,@RequestBody Date fechaFin){
+        try{
+        if(mantenimientoService.getMantenimientoById(id) != null) {
+            mantenimientoService.finalizarMantenimiento(id, fechaFin);
+            return ResponseEntity.ok("Mantenimiento finalizado con éxito");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El mantenimiento no fue encontrado");
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al finalizar el mantenimiento");
+        }
+    }
 
     @PostMapping
     public ResponseEntity<String> addMantenimiento(@RequestBody Mantenimiento mantenimiento) {
         try{
-            if(clientMonopatin.getMonopatin(mantenimiento.getIdMonopatin()) != null){
-                clientMonopatin.updateMonopatinHabilitado(mantenimiento.getIdMonopatin(), true);
                 mantenimientoService.addMantenimiento(mantenimiento);
                 return new ResponseEntity<>("Exito", HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>("No existe el monopatin", HttpStatus.BAD_REQUEST);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

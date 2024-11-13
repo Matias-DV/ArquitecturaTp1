@@ -29,7 +29,7 @@ public class monopatinService{
     }
 
     public void updateMonopatin(Monopatin m){
-        mr.updateMonopatin(m.getUbicacionActual(), m.getEstaActivo(), m.getHabilitado(), m.getKilometrosTotales(), m.getTiempo_uso_total(), m.getId_monopatin());
+        mr.updateMonopatin(m.getUbicacionX(), m.getUbicacionY(),  m.getEstaActivo(), m.getHabilitado(), m.getKilometrosTotales(), m.getTiempo_uso_total(), m.getId_monopatin());
     }
 
     public void deleteMonopatin(int id_monopatin) {

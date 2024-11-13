@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
+    @Modifying
     @Query("DELETE FROM Usuario u WHERE u.id =: id")
     public void deleteUsuario(@Param("id") Integer id);
 

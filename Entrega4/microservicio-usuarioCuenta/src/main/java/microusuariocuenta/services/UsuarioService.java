@@ -1,5 +1,6 @@
 package microusuariocuenta.services;
 
+import jakarta.transaction.Transactional;
 import microusuariocuenta.dto.UsuarioDTO;
 import microusuariocuenta.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import microusuariocuenta.repositories.UsuarioRepository;
 
 @Service
+@Transactional
 public class UsuarioService {
 
     @Autowired

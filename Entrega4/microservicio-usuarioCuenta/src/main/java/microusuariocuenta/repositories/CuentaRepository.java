@@ -8,9 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
+import java.util.List;
 
 public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
 
+    @Modifying
     @Query("DELETE FROM Cuenta c WHERE c.id = :id")
     void deleteCuenta(@Param("id") int id);
 
@@ -21,5 +23,6 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Query("SELECT new microusuariocuenta.dto.CuentaDTO(c.id, c.saldo, c.fechaAlta, c.idMercadoPago) FROM Cuenta c WHERE c.id = :id")
     public CuentaDTO getCuentaById(@Param("id") int id);
 
-
+    @Query("SELECT new microusuariocuenta.dto.CuentaDTO(c.id, c.saldo, c.fechaAlta, c.idMercadoPago) FROM Cuenta c")
+    List<CuentaDTO> getCuentas();
 }

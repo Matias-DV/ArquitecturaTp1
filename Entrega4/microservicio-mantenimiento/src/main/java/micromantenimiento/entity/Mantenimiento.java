@@ -14,20 +14,16 @@ import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.util.Date;
 
+@Getter
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 public class Mantenimiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private int id;
-    @Getter
     private int idMonopatin;
-    @Getter
     @NonNull
     private Date fechaInicio;
-    @Getter
     private Date fechaFin;
 
 
