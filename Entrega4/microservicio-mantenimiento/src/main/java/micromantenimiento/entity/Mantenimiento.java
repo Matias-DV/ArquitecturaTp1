@@ -26,5 +26,9 @@ public class Mantenimiento {
     private Date fechaInicio;
     private Date fechaFin;
 
-
+    public Mantenimiento(int idMonopatin, Date fechaInicio) {
+        this.idMonopatin = idMonopatin;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin=null;
+    }
 }

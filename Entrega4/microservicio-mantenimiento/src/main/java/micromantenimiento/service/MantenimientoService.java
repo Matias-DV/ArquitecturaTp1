@@ -21,6 +21,13 @@ public class MantenimientoService {
     @Autowired
     private ClientMonopatin clientMonopatin;
 
+    public void finalizarMantenimiento(int idMantenimiento, Date fechaFin){
+        Mantenimiento m = mantenimientoRepository.getById(idMantenimiento);
+        clientMonopatin.updateMonopatinHabilitado(m.getIdMonopatin(), true);
+        mantenimientoRepository.finalizarMantenimiento(fechaFin, idMantenimiento);
+    }
+
+
     public Mantenimiento addMantenimiento(Mantenimiento m){
         Monopatin monopatin = clientMonopatin.getMonopatin(m.getIdMonopatin());
         if(monopatin != null){

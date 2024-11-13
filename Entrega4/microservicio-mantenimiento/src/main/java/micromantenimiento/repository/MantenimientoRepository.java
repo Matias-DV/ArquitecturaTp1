@@ -19,4 +19,8 @@ public interface MantenimientoRepository extends JpaRepository<Mantenimiento, In
 
     @Query("SELECT new micromantenimiento.dto.MantenimientoDTO(m.id,m.idMonopatin,m.fechaInicio,m.fechaFin) FROM Mantenimiento m")
     List<MantenimientoDTO> getMantenimientos();
+
+    @Modifying
+    @Query("UPDATE Mantenimiento m SET m.fechaFin = :fechaFin WHERE m.id = :id")
+    public void finalizarMantenimiento(@Param("fechaFin") Date fechaFin, @Param("id") int id);
 }

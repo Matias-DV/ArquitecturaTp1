@@ -43,4 +43,6 @@ public class monopatinService{
     public void updateHabilitadoMonopatin(int id, boolean valor) {
         mr.updateHabilitadoMonopatin(id, valor);
     }
+
+    public List<MonopatinDTO> getReporteMonopatinesPorKilometro() { return mr.getReporteMonopatinesPorKilometro();}
 }

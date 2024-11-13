@@ -21,4 +21,8 @@ public interface ClientMonopatin {
 
     @GetMapping("api/monopatines/id/{id_monopatin}")
     Monopatin getMonopatin(@PathVariable("id_monopatin") int id_monopatin);
+
+    @GetMapping("api/monopatines/reporte/kilometros")
+    List<Monopatin> getReporteMonopatinesPorKilometro();
+
 }

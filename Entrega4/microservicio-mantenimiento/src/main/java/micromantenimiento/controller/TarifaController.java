@@ -68,7 +68,7 @@ public class TarifaController {
 
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<String> deleteAdministrador(@PathVariable int id) {
+    public ResponseEntity<String> deleteTarifa(@PathVariable int id) {
         try {
             if (tarifaService.getTarifaById(id) != null) {
                 tarifaService.deleteTarifa(id);
@@ -76,7 +76,7 @@ public class TarifaController {
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarifa no encontrado.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar el administrador.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la Tarifa.");
         }
     }
 
