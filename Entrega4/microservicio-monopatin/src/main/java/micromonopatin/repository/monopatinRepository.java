@@ -28,4 +28,8 @@ public interface monopatinRepository  extends JpaRepository<Monopatin,Integer> {
 
     @Query("SELECT new micromonopatin.dto.MonopatinDTO(m.id_monopatin, m.ubicacionActual, m.estaActivo, m.habilitado, m.kilometrosTotales, m.tiempo_uso_total) FROM Monopatin m")
     List<MonopatinDTO> getMonopatines();
+
+    @Modifying
+    @Query("UPDATE Monopatin m SET m.habilitado = :habilitado WHERE m.id_monopatin = :id_monopatin")
+    void updateHabilitadoMonopatin(@Param("id_monopatin") int id,@Param("habilitado") boolean valor);
 }

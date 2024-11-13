@@ -2,6 +2,7 @@ package micromantenimiento.controller;
 
 import micromantenimiento.dto.MantenimientoDTO;
 import micromantenimiento.entity.Mantenimiento;
+import micromantenimiento.feignClients.ClientMonopatin;
 import micromantenimiento.service.MantenimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,14 +18,21 @@ public class MantenimientoController {
     @Autowired
     private MantenimientoService mantenimientoService;
 
+    @Autowired
+    private ClientMonopatin clientMonopatin;
+
     @PostMapping
-    public ResponseEntity<Mantenimiento> addCuenta(@RequestBody Mantenimiento mantenimiento) {
+    public ResponseEntity<String> addMantenimiento(@RequestBody Mantenimiento mantenimiento) {
         try{
-            mantenimientoService.addMantenimiento(mantenimiento);
-            return new ResponseEntity<>(mantenimiento, HttpStatus.CREATED);
+            if(clientMonopatin.getMonopatin(mantenimiento.getIdMonopatin()) != null){
+                clientMonopatin.updateMonopatinHabilitado(mantenimiento.getIdMonopatin(), true);
+                mantenimientoService.addMantenimiento(mantenimiento);
+                return new ResponseEntity<>("Exito", HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>("No existe el monopatin", HttpStatus.BAD_REQUEST);
         }
         catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -41,7 +49,7 @@ public class MantenimientoController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @DeleteMapping("/id/{id}")
+    @DeleteMapping("/id/{idMantenimiento}")
     public ResponseEntity<String> deleteMantenimiento(@PathVariable int idMantenimiento){
         try {
             if (mantenimientoService.getMantenimientoById(idMantenimiento) != null) {
@@ -51,7 +59,7 @@ public class MantenimientoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Mantenimiento no encontrado.");
         }
         catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar el mantenimiento.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar el mantenimiento." + e.getMessage());
         }
     }
 

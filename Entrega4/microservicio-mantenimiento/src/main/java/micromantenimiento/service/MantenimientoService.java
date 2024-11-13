@@ -27,7 +27,7 @@ public class MantenimientoService {
     }
 
     public void deleteMantenimiento(int idMantenimiento){
-        mantenimientoRepository.deleteMantenimiento(idMantenimiento);
+        mantenimientoRepository.deleteById(idMantenimiento);
     }
 
     public void updateMantenimiento(Mantenimiento m){

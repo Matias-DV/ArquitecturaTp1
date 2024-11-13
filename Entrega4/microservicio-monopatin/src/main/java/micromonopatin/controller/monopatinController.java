@@ -1,5 +1,6 @@
 package micromonopatin.controller;
 
+import jakarta.transaction.Transactional;
 import micromonopatin.dto.MonopatinDTO;
 import micromonopatin.entity.Monopatin;
 import micromonopatin.service.monopatinService;
@@ -21,6 +22,17 @@ public class monopatinController{
         return ResponseEntity.ok(ms.addMonopatin(monopatin));
     }
 
+    @PutMapping("/id/{id}/habilitado/{valor}")
+    public ResponseEntity<String> updateHabilitadoMonopatin(@PathVariable int id, @PathVariable boolean valor) {
+        try{
+            ms.updateHabilitadoMonopatin(id,valor);
+            return ResponseEntity.ok("Habilitado Monopatin");
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<MonopatinDTO>> getMonopatines() {
         return ResponseEntity.ok(ms.getMonopatines());
@@ -32,7 +44,7 @@ public class monopatinController{
     }
 
     @PutMapping("/id/{id}")
-    public ResponseEntity<Monopatin> updateMantenimiento(@PathVariable int id,@RequestBody Monopatin monopatin) {
+    public ResponseEntity<Monopatin> updateMonopatin(@PathVariable int id,@RequestBody Monopatin monopatin) {
         try {
             if (ms.getMonopatinById(id) != null) {
                 ms.updateMonopatin(monopatin);

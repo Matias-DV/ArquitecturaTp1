@@ -10,9 +10,6 @@ import java.util.List;
 
 public interface MantenimientoRepository extends JpaRepository<Mantenimiento, Integer> {
 
-    @Query("DELETE FROM Mantenimiento m WHERE m.id = :id")
-    void deleteMantenimiento(@Param("id") int id);
-
     @Modifying
     @Query("UPDATE Mantenimiento m SET m.idMonopatin = :idMonopatin, m.fechaInicio = :fechaInicio, m.fechaFin = :fechaFin WHERE m.id = :id")
     public void updateMantenimiento(@Param("idMonopatin") int idMonopatin, @Param("fechaInicio") Date fechaInicio, @Param("fechaFin") Date fechaFin, @Param("id") int id);

@@ -1,5 +1,6 @@
 package micromonopatin.service;
 
+import jakarta.transaction.Transactional;
 import micromonopatin.dto.MonopatinDTO;
 import micromonopatin.entity.Monopatin;
 import micromonopatin.repository.monopatinRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class monopatinService{
 
     @Autowired
@@ -36,5 +38,9 @@ public class monopatinService{
 
     public List<MonopatinDTO> getMonopatines() {
         return mr.getMonopatines();
+    }
+
+    public void updateHabilitadoMonopatin(int id, boolean valor) {
+        mr.updateHabilitadoMonopatin(id, valor);
     }
 }
