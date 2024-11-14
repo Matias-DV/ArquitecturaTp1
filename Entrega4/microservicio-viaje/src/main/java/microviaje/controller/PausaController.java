@@ -3,10 +3,9 @@ package microviaje.controller;
 import microviaje.dto.PausaDTO;
 import microviaje.entity.Pausa;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import microviaje.service.PausaService;
 
 import java.util.List;
@@ -23,5 +22,15 @@ public class PausaController {
         return ResponseEntity.ok(pausaService.getPausas());
     }
 
+    @PostMapping()
+    public ResponseEntity<Pausa> addPausa(@RequestBody Pausa pausa) {
+        Pausa p = pausaService.addPausa(pausa);
+        return ResponseEntity.status(HttpStatus.CREATED).body(p);
+    }
 
+    @GetMapping("/monopatin/tiempoPausa")
+    public ResponseEntity<Pausa> getReporteMonopatinesPorTiempoPausa(@PathVariable int idMonopatin) {
+        Pausa p = pausaService.getReporteMonopatinesPorTiempoPausa(idMonopatin);
+
+    }
 }

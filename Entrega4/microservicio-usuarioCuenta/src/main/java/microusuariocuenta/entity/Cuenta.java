@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Cuenta {
     @Id
@@ -23,4 +22,13 @@ public class Cuenta {
     private int idMercadoPago;
     @ManyToMany(mappedBy = "cuentas")
     private List<Usuario> usuarios;
+    private boolean anulada;
+
+    public Cuenta(int id, double saldo, Date fechaAlta, int idMercadoPago) {
+        this.id = id;
+        this.saldo = saldo;
+        this.fechaAlta = fechaAlta;
+        this.idMercadoPago = idMercadoPago;
+        this.anulada = false;
+    }
 }

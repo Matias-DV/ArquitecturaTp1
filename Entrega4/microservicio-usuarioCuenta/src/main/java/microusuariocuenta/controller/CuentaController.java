@@ -1,5 +1,6 @@
 package microusuariocuenta.controller;
 
+import jakarta.ws.rs.Path;
 import microusuariocuenta.services.CuentaService;
 import microusuariocuenta.dto.CuentaDTO;
 import microusuariocuenta.entity.Cuenta;
@@ -74,4 +75,41 @@ public class CuentaController {
         return ResponseEntity.ok(cuentaService.getCuentas());
     }
 
-}
+    @PutMapping("/id/{id}/anularCuenta")
+    public ResponseEntity<String> anularCuenta(@PathVariable int idCuenta) {
+        try {
+            CuentaDTO c = cuentaService.getCuentaById(idCuenta);
+            if (c != null) {
+                if (!c.isAnulada()) {
+                    cuentaService.anularCuenta(idCuenta);
+                    return ResponseEntity.ok("Cuenta anulada con éxito");
+                } else {
+                    return ResponseEntity.ok("La cuenta ya se encuentra anulada");
+                }
+            }
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cuenta no encontrada");
+            }
+            catch(Exception exc){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al anular la cuenta.");
+            }
+        }
+
+    @PutMapping("/id/{id}/desanularCuenta")
+    public ResponseEntity<String> desanularCuenta(@PathVariable int idCuenta) {
+        try {
+            CuentaDTO c = cuentaService.getCuentaById(idCuenta);
+            if (c != null) {
+                if (c.isAnulada()) {
+                    cuentaService.desanularCuenta(idCuenta);
+                    return ResponseEntity.ok("Cuenta desanulada con éxito");
+                } else {
+                    return ResponseEntity.ok("La cuenta ya se encuentra desanulada");
+                }
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cuenta no encontrada");
+        }
+        catch(Exception exc){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al desanular la cuenta.");
+        }
+    }
+    }

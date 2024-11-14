@@ -36,4 +36,12 @@ public class CuentaService {
     public List<CuentaDTO> getCuentas() {
         return cuentaRepository.getCuentas();
     }
+
+    public void anularCuenta(int idCuenta){
+        cuentaRepository.anularCuenta(idCuenta);
+    }
+
+    public void desanularCuenta(int idCuenta){
+        cuentaRepository.desanularCuenta(idCuenta);
+    }
 }

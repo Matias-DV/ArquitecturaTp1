@@ -3,6 +3,7 @@ package microviaje.service;
 import microviaje.dto.ViajeDTO;
 import microviaje.entity.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import microviaje.repository.ViajeRepository;
 
@@ -30,5 +31,9 @@ public class ViajeService {
 
     public void deleteViaje(Long idViaje) {
         viajeRepository.deleteById(idViaje);
+    }
+
+    public long getTiempoPausaMonopatin(int id) {
+        return viajeRepository.getTiempoPausaMonopatin(id);
     }
 }

@@ -16,4 +16,5 @@ public class CuentaDTO {
     private double saldo;
     private Date fechaAlta;
     private int idMercadoPago;
+    private boolean anulada;
 }

@@ -10,4 +10,5 @@ public interface PausaRepository extends JpaRepository<Pausa, Integer> {
 
     @Query("SELECT new microviaje.dto.PausaDTO(p.idPausa, p.idViaje, p.tiempo) FROM Pausa p")
     List<PausaDTO> getPausas();
+
 }

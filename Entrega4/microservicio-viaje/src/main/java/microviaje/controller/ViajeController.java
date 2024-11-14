@@ -1,6 +1,4 @@
 package microviaje.controller;
-
-
 import microviaje.dto.ViajeDTO;
 import microviaje.entity.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,15 @@ public class ViajeController {
             return ResponseEntity.ok(viajeDTO);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/idMonopatin/{id}/tiempoSinPausa")
+    public ResponseEntity<Long> getTiempoPausaMonopatin(@PathVariable int id) {
+        try{
+            return ResponseEntity.ok(viajeService.getTiempoPausaMonopatin(id));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Eliminar un viaje por ID

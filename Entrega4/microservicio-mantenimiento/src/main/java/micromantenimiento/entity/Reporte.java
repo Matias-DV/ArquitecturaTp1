@@ -15,7 +15,7 @@ public class Reporte {
     @Id
     private long idReporte;
     private long idMonopatin;
-    private int kmRecorridos;
+    private double kmRecorridos;
     private int tiempoPausa;
     private int tiempoSinPausa;
 

@@ -1,7 +1,7 @@
 package micromantenimiento.controller;
 
 
-import micromantenimiento.dto.MantenimientoDTO;
+import micromantenimiento.dto.ReporteDTO;
 import micromantenimiento.models.Monopatin;
 import micromantenimiento.service.ReporteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,9 @@ public class ReporteController {
     private ReporteService reporteService;
 
     @GetMapping("/monopatines/kilometros")
-    public ResponseEntity<List<Monopatin>> getReporteMonopatinesPorKilometro() {
+    public ResponseEntity<List<ReporteDTO>> getReporteMonopatinesPorKilometro() {
         try {
+            ;
             return new ResponseEntity<>(reporteService.getReporteMonopatinesPorKilometro(), HttpStatus.OK);
         }
         catch (Exception e) {
@@ -31,13 +32,9 @@ public class ReporteController {
     }
 
     @GetMapping("/monopatines/tiempoPausa")
-    public ResponseEntity<List<Monopatin>> getReporteMonopatinesPorTiempoPausa() {
+    public ResponseEntity<List<ReporteDTO>> getReporteMonopatinesPorTiempoPausa() {
         try {
-            if (reporteService.getReporteMonopatinesPorTiempoPausa() != null) {
-                List<Monopatin> rta = reporteService.getReporteMonopatinesPorTiempoPausa();
-                return new ResponseEntity<>(rta, HttpStatus.OK);
-            }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return new ResponseEntity<>(reporteService.getReporteMonopatinesPorTiempoPausa(), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,10 +42,10 @@ public class ReporteController {
     }
 
     @GetMapping("/monopatines/tiempoSinPausa")
-    public ResponseEntity<List<Monopatin>> getReporteMonopatinesPorTiempoSinPausa() {
+    public ResponseEntity<List<ReporteDTO>> getReporteMonopatinesPorTiempoSinPausa() {
         try {
             if (reporteService.getReporteMonopatinesPorTiempoSinPausa() != null) {
-                List<Monopatin> rta = reporteService.getReporteMonopatinesPorTiempoSinPausa();
+                List<ReporteDTO> rta = reporteService.getReporteMonopatinesPorTiempoSinPausa();
                 return new ResponseEntity<>(rta, HttpStatus.OK);
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

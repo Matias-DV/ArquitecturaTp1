@@ -25,4 +25,12 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
 
     @Query("SELECT new microusuariocuenta.dto.CuentaDTO(c.id, c.saldo, c.fechaAlta, c.idMercadoPago) FROM Cuenta c")
     List<CuentaDTO> getCuentas();
+
+    @Modifying
+    @Query("UPDATE Cuenta c SET c.anulada = true WHERE c.id = :id")
+    public void anularCuenta(@Param("id")int id);
+
+    @Modifying
+    @Query("UPDATE Cuenta c SET c.anulada = false WHERE c.id = :id")
+    public void desanularCuenta(@Param("id")int id);
 }
