@@ -6,8 +6,11 @@ import micromonopatin.entity.Monopatin;
 import micromonopatin.repository.monopatinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -15,6 +18,8 @@ public class monopatinService{
 
     @Autowired
     private monopatinRepository mr;
+
+
 
     public MonopatinDTO getMonopatin(int id_monopatin) {
         return mr.getMonopatin(id_monopatin);
@@ -45,4 +50,14 @@ public class monopatinService{
     }
 
     public List<MonopatinDTO> getReporteMonopatinesPorKilometro() { return mr.getReporteMonopatinesPorKilometro();}
+
+    public static Map<String, Long> getMonopatinesEnOperacion() {
+        Object[] resultado = mr.getMonopatinesEnOperacion().get(0);
+
+        Map<String, Long> estadoMonopatines = new HashMap<>();
+        estadoMonopatines.put("EnOperacion", ((Number) resultado[0]).longValue());
+        estadoMonopatines.put("EnMantenimiento", ((Number) resultado[1]).longValue());
+
+        return estadoMonopatines;
+    }
 }

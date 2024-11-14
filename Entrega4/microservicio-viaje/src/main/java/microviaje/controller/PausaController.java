@@ -27,10 +27,4 @@ public class PausaController {
         Pausa p = pausaService.addPausa(pausa);
         return ResponseEntity.status(HttpStatus.CREATED).body(p);
     }
-
-    @GetMapping("/monopatin/tiempoPausa")
-    public ResponseEntity<Pausa> getReporteMonopatinesPorTiempoPausa(@PathVariable int idMonopatin) {
-        Pausa p = pausaService.getReporteMonopatinesPorTiempoPausa(idMonopatin);
-
-    }
 }

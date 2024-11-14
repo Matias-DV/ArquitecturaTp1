@@ -22,8 +22,4 @@ public class PausaService {
     public Pausa addPausa(Pausa pausa) {
         return PausaRepository.save(pausa);
     }
-
-    public PausaDTO getReporteMonopatinesPorTiempoPausa(int idMonopatin) {
-        return PausaRepository.getReporteMonopatinesPorTiempoPausa(idMonopatin);
-    }
 }

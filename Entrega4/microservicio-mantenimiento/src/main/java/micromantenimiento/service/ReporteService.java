@@ -22,7 +22,28 @@ public class ReporteService {
     @Autowired
     private ClientMonopatin clientMonopatin;
 
+    @Autowired
     private ClientViaje clientViaje;
+
+    public List<ReporteDTO> getReporteCompleto(){
+        List<Monopatin> monopatinesPorKilometro = clientMonopatin.getReporteMonopatinesPorKilometro();
+        List<ReporteDTO> reportes = new ArrayList<>();
+        for(Monopatin m : monopatinesPorKilometro){
+            ReporteDTO r = new ReporteDTO();
+            r.setIdMonopatin(m.getId_monopatin());
+            r.setTiempoSinPausa(m.getTiempo_uso_total());
+            r.setKmRecorridos(m.getKilometrosTotales());
+            Long tiempoPausa = clientViaje.getTiempoPausaMonopatin(m.getId_monopatin());
+            if(tiempoPausa == null){
+                r.setTiempoPausa(m.getTiempo_uso_total());
+            }else{
+                r.setTiempoPausa(m.getTiempo_uso_total()+clientViaje.getTiempoPausaMonopatin(m.getId_monopatin()));
+            }
+            reportes.add(r);
+        }
+        return reportes;
+    }
+
 
     public List<ReporteDTO> getReporteMonopatinesPorKilometro() {
         List<Monopatin> monopatines = clientMonopatin.getReporteMonopatinesPorKilometro();

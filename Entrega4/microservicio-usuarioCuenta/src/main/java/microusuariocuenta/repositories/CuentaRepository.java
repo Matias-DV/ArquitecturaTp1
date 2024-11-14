@@ -20,10 +20,10 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Query("UPDATE Cuenta c SET c.saldo = :saldo, c.fechaAlta = :fechaAlta, c.idMercadoPago =:idMercadoPago")
     public void updateCuenta(@Param("saldo") double saldo, @Param("fechaAlta") Date fechaAlta, @Param("idMercadoPago") int idMercadoPago);
 
-    @Query("SELECT new microusuariocuenta.dto.CuentaDTO(c.id, c.saldo, c.fechaAlta, c.idMercadoPago) FROM Cuenta c WHERE c.id = :id")
+    @Query("SELECT new microusuariocuenta.dto.CuentaDTO(c.id, c.saldo, c.fechaAlta, c.idMercadoPago, c.anulada) FROM Cuenta c WHERE c.id = :id")
     public CuentaDTO getCuentaById(@Param("id") int id);
 
-    @Query("SELECT new microusuariocuenta.dto.CuentaDTO(c.id, c.saldo, c.fechaAlta, c.idMercadoPago) FROM Cuenta c")
+    @Query("SELECT new microusuariocuenta.dto.CuentaDTO(c.id, c.saldo, c.fechaAlta, c.idMercadoPago, c.anulada) FROM Cuenta c")
     List<CuentaDTO> getCuentas();
 
     @Modifying

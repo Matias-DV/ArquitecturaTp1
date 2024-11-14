@@ -14,6 +14,6 @@ public interface ClientViaje{
     @GetMapping("api/viaje")
     List<Viaje> getViajes();
 
-    @GetMapping("api/viajes/idMonopatin/{id}/tiempoSinPausa")
-    long getTiempoPausaMonopatin(@PathVariable("id_monopatin") int id_monopatin);
+    @GetMapping("api/viajes/idMonopatin/{id_monopatin}/tiempoSinPausa")
+    Long getTiempoPausaMonopatin(@PathVariable("id_monopatin") int id_monopatin);
 }

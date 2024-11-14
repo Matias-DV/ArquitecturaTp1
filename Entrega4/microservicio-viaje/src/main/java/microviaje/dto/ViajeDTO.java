@@ -10,7 +10,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ViajeDTO {
-
     private long idViaje;
     private long idUsuario;
     private long idMonopatin;
@@ -19,5 +18,9 @@ public class ViajeDTO {
     private Date fechaFin;
     private float kmRecorridos;
     private float costo;
+
+    public ViajeDTO(int idMonopatin) {
+        this.idMonopatin = idMonopatin;
+    }
 
 }

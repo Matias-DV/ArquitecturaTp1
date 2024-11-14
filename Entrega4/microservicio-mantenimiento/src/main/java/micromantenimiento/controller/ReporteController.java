@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,11 +21,14 @@ public class ReporteController {
     @Autowired
     private ReporteService reporteService;
 
-    @GetMapping("/monopatines/kilometros")
-    public ResponseEntity<List<ReporteDTO>> getReporteMonopatinesPorKilometro() {
+    @GetMapping("/monopatines/kilometros/tiempos/{quieroTiempos}")
+    public ResponseEntity<List<ReporteDTO>> getReporteMonopatinesPorKilometro(@PathVariable boolean quieroTiempos) {
         try {
-            ;
-            return new ResponseEntity<>(reporteService.getReporteMonopatinesPorKilometro(), HttpStatus.OK);
+            if(quieroTiempos){
+                return ResponseEntity.ok(reporteService.getReporteCompleto());
+            }else{
+                return ResponseEntity.ok(reporteService.getReporteMonopatinesPorKilometro());
+            }
         }
         catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

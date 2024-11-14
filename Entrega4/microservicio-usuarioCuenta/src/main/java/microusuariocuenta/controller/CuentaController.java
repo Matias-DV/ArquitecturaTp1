@@ -75,7 +75,7 @@ public class CuentaController {
         return ResponseEntity.ok(cuentaService.getCuentas());
     }
 
-    @PutMapping("/id/{id}/anularCuenta")
+    @PutMapping("/id/{idCuenta}/anularCuenta")
     public ResponseEntity<String> anularCuenta(@PathVariable int idCuenta) {
         try {
             CuentaDTO c = cuentaService.getCuentaById(idCuenta);
@@ -92,9 +92,9 @@ public class CuentaController {
             catch(Exception exc){
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al anular la cuenta.");
             }
-        }
+    }
 
-    @PutMapping("/id/{id}/desanularCuenta")
+    @PutMapping("/id/{idCuenta}/desanularCuenta")
     public ResponseEntity<String> desanularCuenta(@PathVariable int idCuenta) {
         try {
             CuentaDTO c = cuentaService.getCuentaById(idCuenta);
@@ -112,4 +112,5 @@ public class CuentaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al desanular la cuenta.");
         }
     }
-    }
+
+}

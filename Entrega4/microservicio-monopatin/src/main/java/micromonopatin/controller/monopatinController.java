@@ -1,6 +1,5 @@
 package micromonopatin.controller;
 
-import jakarta.transaction.Transactional;
 import micromonopatin.dto.MonopatinDTO;
 import micromonopatin.entity.Monopatin;
 import micromonopatin.service.monopatinService;
@@ -8,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/monopatines")
@@ -76,4 +75,9 @@ public class monopatinController{
         return ResponseEntity.ok(ms.getReporteMonopatinesPorKilometro());
     }
 
+    @GetMapping("/monopatinesEnOperacion")
+    public ResponseEntity<Map<String, Long>> getMonopatinesEnOperacion() {
+        Map<String, Long> estado = monopatinService.getMonopatinesEnOperacion();
+        return ResponseEntity.ok(estado);
+    }
 }

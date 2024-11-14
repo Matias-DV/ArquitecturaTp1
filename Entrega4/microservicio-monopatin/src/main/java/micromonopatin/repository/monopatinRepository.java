@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface monopatinRepository  extends JpaRepository<Monopatin,Integer> {
@@ -36,4 +37,11 @@ public interface monopatinRepository  extends JpaRepository<Monopatin,Integer> {
 
     @Query("SELECT new micromonopatin.dto.MonopatinDTO(m.id_monopatin, m.estaActivo, m.habilitado, m.kilometrosTotales, m.tiempo_uso_total, m.ubicacionX, m.ubicacionY) FROM Monopatin m order by m.kilometrosTotales")
     List<MonopatinDTO> getReporteMonopatinesPorKilometro();
+
+    @Query("SELECT " +
+            "SUM(CASE WHEN m.estaActivo = true AND m.habilitado = true THEN 1 ELSE 0 END) AS enOperacion, " +
+            "SUM(CASE WHEN m.estaActivo = false OR m.habilitado = false THEN 1 ELSE 0 END) AS enMantenimiento " +
+            "FROM Monopatin m")
+    List<Object[]> getMonopatinesEnOperacion();
+
 }

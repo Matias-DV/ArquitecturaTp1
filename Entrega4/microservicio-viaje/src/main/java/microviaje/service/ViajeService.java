@@ -3,6 +3,7 @@ package microviaje.service;
 import microviaje.dto.ViajeDTO;
 import microviaje.entity.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import microviaje.repository.ViajeRepository;
@@ -33,7 +34,14 @@ public class ViajeService {
         viajeRepository.deleteById(idViaje);
     }
 
-    public long getTiempoPausaMonopatin(int id) {
+    public Long getTiempoPausaMonopatin(int id) {
         return viajeRepository.getTiempoPausaMonopatin(id);
     }
+
+    public List<ViajeDTO> getMonopatinesMasViajesPorAnio(int cant, int anio) {
+        return viajeRepository.getMonopatinesMasViajesPorAnio(cant, anio);
+    }
+
+
+    public Integer getFacturadoEntre(int anio, int mes1, int mes2) {viajeRepository.getFacturadoEntre(anio, mes1, mes2);}
 }
