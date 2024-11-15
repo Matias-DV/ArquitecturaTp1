@@ -1,5 +1,7 @@
 package micromonopatin.controller;
 
+import jakarta.ws.rs.GET;
+import micromonopatin.dto.MonopatinDTO;
 import micromonopatin.dto.ParadaDTO;
 import micromonopatin.entity.Monopatin;
 import micromonopatin.entity.Parada;
@@ -58,6 +60,11 @@ public class paradaController{
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la parada.");
         }
+    }
+
+    @GetMapping("/monopatines/posX/{posX}/posY/{posY}")
+    public ResponseEntity<List<MonopatinDTO>> getMonopatinesParada(@PathVariable int posX,@PathVariable int posY) {
+        return ResponseEntity.ok(ps.getMonopatinesParada(posX, posY));
     }
 
 }

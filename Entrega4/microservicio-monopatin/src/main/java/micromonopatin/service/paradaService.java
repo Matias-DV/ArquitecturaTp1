@@ -1,6 +1,7 @@
 package micromonopatin.service;
 
 import jakarta.transaction.Transactional;
+import micromonopatin.dto.MonopatinDTO;
 import micromonopatin.dto.ParadaDTO;
 import micromonopatin.entity.Parada;
 import micromonopatin.repository.paradaRepository;
@@ -34,4 +35,6 @@ public class paradaService{
     public void deleteParada(int id_parada) {
         pr.deleteParada(id_parada);
     }
+
+    public List<MonopatinDTO> getMonopatinesParada(int posX, int posY) { return pr.getMonopatinesParada(posX, posY); }
 }

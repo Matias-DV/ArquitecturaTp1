@@ -1,6 +1,7 @@
 package micromonopatin.controller;
 
 import micromonopatin.dto.MonopatinDTO;
+import micromonopatin.dto.ParadaDTO;
 import micromonopatin.entity.Monopatin;
 import micromonopatin.service.monopatinService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,13 @@ public class monopatinController{
 
     @GetMapping("/monopatinesEnOperacion")
     public ResponseEntity<Map<String, Long>> getMonopatinesEnOperacion() {
-        Map<String, Long> estado = monopatinService.getMonopatinesEnOperacion();
+        Map<String, Long> estado = ms.getMonopatinesEnOperacion();
         return ResponseEntity.ok(estado);
+    }
+
+    @GetMapping("/monopatinesCercanos/posX/{posX}/posY/{posY}/radio/{radio}")
+    public ResponseEntity<List<MonopatinDTO>> getMonopatinesCercanos(@PathVariable int posX,@PathVariable int posY,@PathVariable int radio) {
+        List<MonopatinDTO> rta = ms.getMonopatinesCercanos(posX, posY, radio);
+        return ResponseEntity.ok(rta);
     }
 }

@@ -2,6 +2,7 @@ package micromonopatin.service;
 
 import jakarta.transaction.Transactional;
 import micromonopatin.dto.MonopatinDTO;
+import micromonopatin.dto.ParadaDTO;
 import micromonopatin.entity.Monopatin;
 import micromonopatin.repository.monopatinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class monopatinService{
 
     public List<MonopatinDTO> getReporteMonopatinesPorKilometro() { return mr.getReporteMonopatinesPorKilometro();}
 
-    public static Map<String, Long> getMonopatinesEnOperacion() {
+    public Map<String, Long> getMonopatinesEnOperacion() {
         Object[] resultado = mr.getMonopatinesEnOperacion().get(0);
 
         Map<String, Long> estadoMonopatines = new HashMap<>();
@@ -59,5 +60,9 @@ public class monopatinService{
         estadoMonopatines.put("EnMantenimiento", ((Number) resultado[1]).longValue());
 
         return estadoMonopatines;
+    }
+
+    public List<MonopatinDTO> getMonopatinesCercanos(int posX, int posY, int radio) {
+        return mr.getMonopatinesCercanos(posX, posY, radio);
     }
 }

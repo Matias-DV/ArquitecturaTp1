@@ -1,6 +1,7 @@
 package micromonopatin.repository;
 
 import micromonopatin.dto.MonopatinDTO;
+import micromonopatin.dto.ParadaDTO;
 import micromonopatin.entity.Monopatin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -39,9 +40,14 @@ public interface monopatinRepository  extends JpaRepository<Monopatin,Integer> {
     List<MonopatinDTO> getReporteMonopatinesPorKilometro();
 
     @Query("SELECT " +
-            "SUM(CASE WHEN m.estaActivo = true AND m.habilitado = true THEN 1 ELSE 0 END) AS enOperacion, " +
-            "SUM(CASE WHEN m.estaActivo = false OR m.habilitado = false THEN 1 ELSE 0 END) AS enMantenimiento " +
+            "SUM(CASE WHEN m.habilitado = true THEN 1 ELSE 0 END) AS enOperacion, " +
+            "SUM(CASE WHEN m.habilitado = false THEN 1 ELSE 0 END) AS enMantenimiento " +
             "FROM Monopatin m")
     List<Object[]> getMonopatinesEnOperacion();
 
+    @Query("SELECT new micromonopatin.dto.MonopatinDTO(m.id_monopatin, m.estaActivo, m.habilitado, m.kilometrosTotales, m.tiempo_uso_total, m.ubicacionX, m.ubicacionY) " +
+            "FROM Monopatin m " +
+            "WHERE SQRT(POWER(m.ubicacionX - :posX, 2) + POWER(m.ubicacionY - :posY, 2)) <= :radio " +
+            "AND m.estaActivo = false AND m.habilitado = true")
+    List<MonopatinDTO> getMonopatinesCercanos(int posX, int posY, int radio);
 }

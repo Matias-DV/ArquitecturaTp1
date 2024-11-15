@@ -1,5 +1,6 @@
 package microviaje.service;
 
+import jakarta.transaction.Transactional;
 import microviaje.dto.ViajeDTO;
 import microviaje.entity.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ViajeService {
 
     @Autowired
@@ -43,5 +45,11 @@ public class ViajeService {
     }
 
 
-    public Integer getFacturadoEntre(int anio, int mes1, int mes2) {viajeRepository.getFacturadoEntre(anio, mes1, mes2);}
+    public Integer getFacturadoEntre(int anio, int mes1, int mes2) {
+        return viajeRepository.getFacturadoEntre(anio, mes1, mes2);
+    }
+
+    public void updateViaje(Viaje viaje, long idViaje) {
+        viajeRepository.updateViaje(viaje.getCosto(), viaje.getFechaInicio(), viaje.getFechaFin(), viaje.getIdMonopatin(), viaje.getIdParada(), viaje.getKmRecorridos(), viaje.getIdUsuario(),idViaje);
+    }
 }

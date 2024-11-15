@@ -2,6 +2,7 @@ package microviaje.controller;
 import microviaje.dto.ViajeDTO;
 import microviaje.entity.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,19 @@ public class ViajeController {
         return ResponseEntity.ok(savedViaje);
     }
 
+    @PutMapping("/id/{idViaje}")
+    public ResponseEntity<String> updateViaje(@PathVariable long idViaje, @RequestBody Viaje viaje) {
+        try {
+            if (viajeService.getViajeById(idViaje) != null){
+                viajeService.updateViaje(viaje, idViaje);
+                return ResponseEntity.ok("Viaje actualizado");
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Viaje no encontrado");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el viaje"+ e.getMessage());
+        }
+    }
+
     // Obtener todos los viajes
     @GetMapping
     public ResponseEntity<List<ViajeDTO>> getAllViajes() {
@@ -33,7 +47,7 @@ public class ViajeController {
     }
 
     // Obtener un viaje por ID
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<ViajeDTO> getViajeById(@PathVariable Long id) {
         ViajeDTO viajeDTO = viajeService.getViajeById(id);
         if (viajeDTO != null) {
@@ -66,15 +80,13 @@ public class ViajeController {
         }
     }
 
-    @GetMapping("/monopatinesMasViajesPorAnio/cant/{cant}/anio/{}")
+    @GetMapping("/monopatinesMasViajesPorAnio/cant/{cant}/anio/{anio}")
     public ResponseEntity<List<ViajeDTO>> getMonopatinesMasViajesPorAnio(@PathVariable int cant, @PathVariable int anio) {
         return ResponseEntity.ok(viajeService.getMonopatinesMasViajesPorAnio(cant, anio));
     }
 
-    @GetMapping("/totalFacturadoEntre/anio/{anio}/mes1/{mes1}/mes2{mes2}")
+    @GetMapping("/totalFacturadoEntre/anio/{anio}/mes1/{mes1}/mes2/{mes2}")
     public ResponseEntity<Integer> getFacturadoEntre(@PathVariable int anio, @PathVariable int mes1, @PathVariable int mes2) {
         return  ResponseEntity.ok(viajeService.getFacturadoEntre(anio,mes1,mes2));
     }
-
-
 }

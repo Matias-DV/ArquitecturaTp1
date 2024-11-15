@@ -1,6 +1,8 @@
 package micromonopatin.repository;
 
+import micromonopatin.dto.MonopatinDTO;
 import micromonopatin.dto.ParadaDTO;
+import micromonopatin.entity.Monopatin;
 import micromonopatin.entity.Parada;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,4 +27,7 @@ public interface paradaRepository extends JpaRepository<Parada,Integer> {
 
     @Query("SELECT new micromonopatin.dto.ParadaDTO(p.id_parada,p.permitida,p.ubicacionX,p.ubicacionY) FROM Parada p")
     List<ParadaDTO> getParadas();
+
+    @Query("SELECT new micromonopatin.dto.MonopatinDTO(m.id_monopatin, m.estaActivo, m.habilitado, m.kilometrosTotales, m.tiempo_uso_total, m.ubicacionX, m.ubicacionY) FROM Monopatin m WHERE m.ubicacionX = :posX AND m.ubicacionY = :posY")
+    List<MonopatinDTO> getMonopatinesParada(int posX, int posY);
 }
