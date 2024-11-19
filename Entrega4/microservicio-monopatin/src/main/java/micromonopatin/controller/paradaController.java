@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/paradas")
-public class paradaController{
+public class paradaController {
     @Autowired
     private paradaService ps;
 
@@ -42,29 +42,26 @@ public class paradaController{
                 return new ResponseEntity<>(parada, HttpStatus.OK);
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/id/{idParada}")
-    public ResponseEntity<String> deleteParada(@PathVariable int idParada){
+    public ResponseEntity<String> deleteParada(@PathVariable int idParada) {
         try {
             if (ps.getParada(idParada) != null) {
                 ps.deleteParada(idParada);
                 return ResponseEntity.ok("Parada eliminada con éxito");
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parada no encontrada.");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la parada.");
         }
     }
 
     @GetMapping("/monopatines/posX/{posX}/posY/{posY}")
-    public ResponseEntity<List<MonopatinDTO>> getMonopatinesParada(@PathVariable int posX,@PathVariable int posY) {
+    public ResponseEntity<List<MonopatinDTO>> getMonopatinesParada(@PathVariable int posX, @PathVariable int posY) {
         return ResponseEntity.ok(ps.getMonopatinesParada(posX, posY));
     }
-
 }

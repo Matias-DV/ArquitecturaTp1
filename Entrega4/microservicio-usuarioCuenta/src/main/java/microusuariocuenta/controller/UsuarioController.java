@@ -25,7 +25,7 @@ public class UsuarioController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-// okavoy a buscar en internet info
+
     @DeleteMapping("/id/{id}")
     public ResponseEntity<String> deleteUsuario(@PathVariable int idUsuario){
         try {
