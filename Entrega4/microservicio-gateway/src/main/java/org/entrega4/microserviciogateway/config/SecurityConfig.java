@@ -44,10 +44,16 @@ public class SecurityConfig {
             .authorizeHttpRequests( authz -> authz
                     .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-                    .requestMatchers( HttpMethod.POST,"/api/carreras").hasAuthority( AuthotityConstant._ADMIN )//el orden va de más específica a menos específica
-                    .requestMatchers( "/api/carreras/**").hasAuthority( AuthotityConstant._ALUMNO ) // ésta es menos específica que la de arriba
-                    .requestMatchers("/api/estudiantes/**").hasAuthority( AuthotityConstant._ALUMNO )
-                    .requestMatchers( "/api/inscripciones/**").hasAuthority( AuthotityConstant._ADMIN )
+                    .requestMatchers( HttpMethod.POST,"/api/reportes").hasAuthority( AuthotityConstant._ADMIN )
+                    .requestMatchers( HttpMethod.POST,"/api/tarifas").hasAuthority( AuthotityConstant._ADMIN )
+                    .requestMatchers( HttpMethod.POST,"/api/mantenimientos").hasAuthority( AuthotityConstant._ADMIN )//el orden va de más específica a menos específica
+                    .requestMatchers( "/api/mantenimientos/**").hasAuthority( AuthotityConstant._ADMIN ) // ésta es menos específica que la de arriba
+                    .requestMatchers("/api/tarifas/**").hasAuthority( AuthotityConstant._ADMIN )
+                    .requestMatchers("/api/reportes/**").hasAuthority( AuthotityConstant._ADMIN )
+                    .requestMatchers( "/api/monopatines/**").hasAuthority( AuthotityConstant._USUARIO )
+                    .requestMatchers( "/api/viajes/**").hasAuthority( AuthotityConstant._USUARIO )
+                    .requestMatchers( "/api/paradas/**").hasAuthority( AuthotityConstant._USUARIO )
+                    .requestMatchers( "/api/pausas/**").hasAuthority( AuthotityConstant._USUARIO )
                     .anyRequest().authenticated()
             )
             .httpBasic( Customizer.withDefaults() )

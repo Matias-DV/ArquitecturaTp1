@@ -1,8 +1,6 @@
 package org.entrega4.microserviciogateway.entity;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
