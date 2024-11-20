@@ -4,14 +4,10 @@ import jakarta.transaction.Transactional;
 import microviaje.dto.ViajeDTO;
 import microviaje.entity.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import microviaje.repository.ViajeRepository;
+import microviaje.repository.jpa.ViajeRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

@@ -1,4 +1,4 @@
-package microviaje.repository;
+package microviaje.repository.jpa;
 
 import microviaje.dto.ViajeDTO;
 import microviaje.entity.Viaje;
