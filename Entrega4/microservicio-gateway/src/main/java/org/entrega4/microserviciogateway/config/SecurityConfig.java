@@ -44,9 +44,9 @@ public class SecurityConfig {
             .authorizeHttpRequests( authz -> authz
                     .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/cuentas").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/cuentas").authenticated()
                     .requestMatchers(HttpMethod.GET, "/api/cuentas").hasAuthority( AuthotityConstant._ADMIN )
-                    .requestMatchers( "/api/usuarios").permitAll()
+                    .requestMatchers( "/api/usuarios").authenticated()
                     .requestMatchers( "/api/monopatines").hasAuthority( AuthotityConstant._ADMIN )
                     .requestMatchers( "/api/paradas").hasAuthority( AuthotityConstant._ADMIN )
                     .requestMatchers("/api/reportes").hasAuthority( AuthotityConstant._ADMIN )
