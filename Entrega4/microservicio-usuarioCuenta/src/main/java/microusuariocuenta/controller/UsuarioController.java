@@ -27,10 +27,10 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<String> deleteUsuario(@PathVariable int idUsuario){
+    public ResponseEntity<String> deleteUsuario(@PathVariable int id){
         try {
-            if (usuarioService.getUsuarioById(idUsuario) != null) {
-                usuarioService.deleteUsuario(idUsuario);
+            if (usuarioService.getUsuarioById(id) != null) {
+                usuarioService.deleteUsuario(id);
                 return ResponseEntity.ok("Usuario eliminado con éxito");
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");

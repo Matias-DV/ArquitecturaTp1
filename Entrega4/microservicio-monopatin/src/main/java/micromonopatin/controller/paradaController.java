@@ -35,9 +35,9 @@ public class paradaController {
     }
 
     @PutMapping("/id/{id_parada}")
-    public ResponseEntity<Parada> updateParada(@PathVariable int id, @RequestBody Parada parada) {
+    public ResponseEntity<Parada> updateParada(@PathVariable int id_parada, @RequestBody Parada parada) {
         try {
-            if (ps.getParada(id) != null) {
+            if (ps.getParada(id_parada) != null) {
                 ps.updateParada(parada);
                 return new ResponseEntity<>(parada, HttpStatus.OK);
             }
