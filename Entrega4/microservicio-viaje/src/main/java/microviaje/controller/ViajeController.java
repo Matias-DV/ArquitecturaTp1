@@ -1,6 +1,7 @@
 package microviaje.controller;
 import microviaje.dto.ViajeDTO;
 import microviaje.entity.Viaje;
+import org.entrega4.microservicioviaje.junit.ViajeVacioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +42,17 @@ public class ViajeController {
 
     // Obtener todos los viajes
     @GetMapping
-    public ResponseEntity<List<ViajeDTO>> getAllViajes() {
+    public ResponseEntity<List<ViajeDTO>> getAllViajes() throws ViajeVacioException {
         List<ViajeDTO> viajes = viajeService.getAllViajes();
+        List<ViajeDTO> viajesTest = viajeService.getAllViajesTest();
+
+        if (viajesTest.isEmpty()) {
+            throw new ViajeVacioException("No hay viajes disponibles");
+        }
         return ResponseEntity.ok(viajes);
     }
+
+
 
     // Obtener un viaje por ID
     @GetMapping("/id/{id}")

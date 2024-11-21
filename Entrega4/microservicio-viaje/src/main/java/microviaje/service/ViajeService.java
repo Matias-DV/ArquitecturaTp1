@@ -3,10 +3,14 @@ package microviaje.service;
 import jakarta.transaction.Transactional;
 import microviaje.dto.ViajeDTO;
 import microviaje.entity.Viaje;
+import org.entrega4.microservicioviaje.junit.ViajeVacioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import microviaje.repository.jpa.ViajeRepository;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,6 +30,14 @@ public class ViajeService {
 
     public List<ViajeDTO> getAllViajes() {
         return viajeRepository.getViajes();
+    }
+
+    public List<ViajeDTO> getAllViajesTest() throws ViajeVacioException {
+
+        List<ViajeDTO> lista = new ArrayList<>();
+
+        if (lista.isEmpty()) throw new ViajeVacioException("NO EXISTEN VIAJES");
+        return null;
     }
 
     public void deleteViaje(Long idViaje) {
