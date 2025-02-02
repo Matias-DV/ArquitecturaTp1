@@ -6,4 +6,4 @@
 ### 4ta : Realizado con Microservicios
  Este ultimo se dividio en 2 ramas. En la rama master esta la 1era parte donde se hizo toda la estructura e implementacion de gateway y eureka y en la rama de Entrega4Parte2 se agrego seguridad de token
 
-### El contenido esta en la rama master y en la entrega2
+### El contenido esta en la rama master y en la entrega4-2daParte
